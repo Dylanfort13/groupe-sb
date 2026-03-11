@@ -1,0 +1,55 @@
+J'ai rencontré en personne le propriétaire. 
+
+Il M'as dit vouloir trnasmorer 'construction SB' en 'Groupe SB'.
+
+En gros, Groupe SB regroupera un certain nombre de division, et chaque division offriera des services.
+
+PAr exmeple Déneigment SB sera une division. Cosntruciton SB en sera une. IL ont déjà 'location expert' qui a son propre site web deja por la location d'outils.
+
+
+Pour la structure du site, ils recherchent quelque chose simmilaire à gorupe gilbert. Voici des détaisl sur la structure de leurs site : 
+1. Navigation Principale (En-tête)
+Le menu est conçu pour orienter rapidement l'utilisateur vers les piliers de l'entreprise :
+
+À propos : Présentation de l'histoire de la famille Gilbert, de la mission, de la vision et des valeurs de l'entreprise (santé-sécurité, respect, excellence).
+
+Nos Expertises / Services : C’est le cœur du site. Il détaille les grands secteurs d'activité :
+
+Génie civil et voirie
+
+Mines et carrières (incluant le forage et le dynamitage)
+
+Environnement (services de décontamination et gestion des matières dangereuses)
+
+Réhabilitation d'infrastructures (souvent lié à leur division Gilbert Infrastructure)
+
+Carrières : Un bouton très mis en avant ("Rejoins la gang") qui mène vers un portail de recrutement listant les offres d'emploi par région ou par métier.
+
+Nous joindre : Formulaire de contact et coordonnées des différents bureaux.
+
+2. Structure de la Page d'Accueil
+La page d'accueil est construite sous forme de "One-Pager" informatif avec plusieurs sections clés :
+
+Bannière Héro : Utilisation de vidéos ou d'images de haute qualité montrant des équipements lourds en action (chantiers, mines) pour illustrer l'envergure du groupe.
+
+Section des Chiffres Clés : Mise en valeur de l'expérience (fondé en 1957), du nombre d'employés et de la présence géographique.
+
+Blocs de Filiales : Des liens directs vers les sites spécialisés ou sections dédiées aux entités du groupe comme Dynamitage TCG, Concassage TCG, ou Services Environnementaux Saint-Laurent.
+
+Actualités / Blogue : Une section présentant les derniers projets majeurs ou les nouvelles de l'entreprise.
+
+3. Le Bas de Page (Footer)
+Le pied de page regroupe les éléments de réassurance et de navigation rapide :
+
+Coordonnées : Adresse du siège social à Saguenay et des bureaux régionaux.
+
+Réseaux Sociaux : Liens vers Facebook, LinkedIn et Instagram (très actifs pour le recrutement).
+
+Certifications : Logos démontrant la conformité ISO ou les standards de sécurité (COR).
+
+Liens Légaux : Politique de confidentialité et conditions d'utilisation.
+
+4. Spécificité Technique
+Le site est "Responsive" (adapté aux mobiles et tablettes) et utilise souvent des sous-domaines ou des sections spécifiques pour ses divisions (ex: infrastructure.groupegilbert.com). L'identité visuelle est forte, utilisant principalement les couleurs corporatives : le noir, le blanc et le jaune/orangé rappelant le secteur de la construction et de la machinerie.
+
+En résumé : C'est un site "vitrine" très orienté vers la crédibilité opérationnelle et le recrutement, structuré pour montrer que le Groupe Gilbert est un joueur intégré capable de gérer des projets de A à Z.

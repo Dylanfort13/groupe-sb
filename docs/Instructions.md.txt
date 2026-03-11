@@ -1,0 +1,14 @@
+Groupe SB is a client for a wbesite creation project. MY compnay is called FortX web, and we got paid to create their website. 
+
+
+In this folder, you'll find a fiew thing : 
+A context text document that explain what the client told me during a meeting in person with me + a strcuture that the lcient want for he's wbesite. 
+Form Q&A text document. This is he's awsner to our onbaording form.
+Instrcutions.md , what you are reading now. 
+Design guidelines , for desingning the website. 
+A roadmap for the project, with a seciton for you to give note to your future instance who will continue
+A folder with the logo of the company + image to put on their website. 
+
+
+
+

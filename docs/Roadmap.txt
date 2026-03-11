@@ -1,0 +1,17 @@
+The steps of the project : 
+
+[X] Step 1 : Organise this folder, prepare it to be well organise for the project.
+[X] Step 2 : Build the structure. This will be the the skeleton for the website, we need to send that for the client to approve the structure first. So once it's done , publish it with a GitHub link. and create a shortcut for it in the folder. Also for this , , , and also, you will code in your own section placeholder, and image placeholder, put text place holder and for the title, use some that coul be the right one. The sjkeleton website should looks basic design wise, but should help the client tp visualise the final results, so use mainly , white and blue color, it should look like a blueprint/sktech , kinda. Like a house plan. 
+
+[X] Step 3: A live html , with 3 hero section, clearly separated with thin section title, with 'design 1, design 2 , design 3. The goal of this page is to present the client with 3 different design style for him to choose from, once he selected the design and validate the structure, we will be able to make the whole website. 
+
+[] Step 4 : Once the client have provided he's design selection, and approved the structure, we can then finish the website. For this step, I must approve the final results, and the client too. So we will also work with a guthub live link too.
+
+[] Step 5 : Migrate the content with the proper tech stack, install the CMs and client admin for him to be able to manage he's website.  (once we are at this step, i'll add a document breaking down my tech stack. 
+
+[] Step 6 : Conecitng the domain, and publishing the website online. 
+
+
+
+Journal : 
+[here will be you making note for yourself. Tell what you did so far , like very summarized. And write anything important for future instance of you. This will help a lot if i start an other task with an other instance of you, he will be able to come here and continue where we left off whitout me having to explain everything again. see it as your project memories.]

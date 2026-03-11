@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groupe SB - Structure du Site</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1e3a5f;
+            --light-blue: #e8f0f8;
+            --border-blue: #4a90c2;
+            --grid-color: rgba(74, 144, 194, 0.15);
+            --annotation-color: #2c5282;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #f0f6fa;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            color: #333;
+        }
+
+        /* Blueprint Header */
+        .blueprint-header {
+            background: var(--primary-blue);
+            color: white;
+            padding: 20px 40px;
+            position: relative;
+            border-bottom: 3px solid var(--border-blue);
+        }
+
+        .blueprint-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background:
+                linear-gradient(45deg, transparent 33.33%, var(--grid-color) 33.33%, var(--grid-color) 66.66%, transparent 66.66%),
+                linear-gradient(-45deg, transparent 33.33%, var(--grid-color) 33.33%, var(--grid-color) 66.66%, transparent 66.66%);
+            background-size: 20px 40px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            border: 2px solid white;
+            padding: 10px 25px;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            border-bottom: 2px solid var(--border-blue);
+            padding: 0;
+            position: relative;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav a {
+            display: block;
+            padding: 20px 30px;
+            text-decoration: none;
+            color: var(--primary-blue);
+            font-weight: bold;
+            border-right: 1px solid var(--grid-color);
+            transition: all 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            background: var(--light-blue);
+        }
+
+        nav a.active {
+            border-bottom: 3px solid var(--border-blue);
+        }
+
+        /* Page indicator */
+        .page-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-blue);
+            color: white;
+            padding: 10px 20px;
+            font-size: 12px;
+            border: 2px solid var(--border-blue);
+            z-index: 1000;
+        }
+
+        /* Page sections */
+        .page {
+            display: none;
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Section blocks */
+        .section-block {
+            background: white;
+            border: 2px solid var(--border-blue);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-header {
+            background: var(--light-blue);
+            padding: 15px 25px;
+            border-bottom: 2px solid var(--border-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        .section-id {
+            background: var(--primary-blue);
+            color: white;
+            padding: 3px 10px;
+            font-size: 11px;
+        }
+
+        .section-content {
+            padding: 25px;
+        }
+
+        /* Blueprint annotations */
+        .annotation {
+            position: absolute;
+            font-size: 10px;
+            color: var(--annotation-color);
+            background: rgba(255,255,255,0.9);
+            padding: 2px 6px;
+            border: 1px dashed var(--border-blue);
+        }
+
+        .annotation-dimensions {
+            position: absolute;
+            right: -60px;
+            top: 50%;
+            transform: translateY(-50%) rotate(90deg);
+            font-size: 10px;
+            color: var(--border-blue);
+            white-space: nowrap;
+        }
+
+        /* Placeholders */
+        .placeholder {
+            background: var(--light-blue);
+            border: 2px dashed var(--border-blue);
+            padding: 40px;
+            text-align: center;
+            color: var(--primary-blue);
+            font-size: 14px;
+            position: relative;
+        }
+
+        .placeholder::before {
+            content: '[ IMAGE PLACEHOLDER ]';
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .placeholder-text {
+            background: #fff9e6;
+            border: 2px dashed #c9a227;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+            color: #8b7355;
+        }
+
+        /* Grid layout for content */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .content-card {
+            border: 1px solid var(--border-blue);
+            padding: 20px;
+            background: #fafbfc;
+        }
+
+        .content-card h4 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--grid-color);
+        }
+
+        .content-card ul {
+            font-size: 13px;
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        .content-card ul li {
+            padding: 3px 0;
+        }
+
+        .content-card .voir-plus {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--primary-blue);
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        /* Services list */
+        .service-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            border-bottom: 1px solid var(--grid-color);
+        }
+
+        .service-item:last-child {
+            border-bottom: none;
+        }
+
+        .service-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light-blue);
+            border: 1px solid var(--border-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        /* Contact info */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-card {
+            border: 2px solid var(--border-blue);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .contact-card h4 {
+            background: var(--primary-blue);
+            color: white;
+            padding: 10px;
+            margin: -20px -20px 20px;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px;
+            margin-top: 40px;
+            border-top: 3px solid var(--border-blue);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-section h4 {
+            color: var(--border-blue);
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: #aaa;
+            text-decoration: none;
+            display: block;
+            padding: 5px 0;
+        }
+
+        /* Legend */
+        .legend {
+            background: white;
+            border: 2px solid var(--border-blue);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .legend-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+        }
+
+        .legend-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .legend-box {
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--border-blue);
+        }
+
+        .legend-box.blueprint { background: var(--light-blue); }
+        .legend-box.image { background: var(--light-blue); border: 2px dashed var(--border-blue); }
+        .legend-box.text { background: #fff9e6; border: 2px dashed #c9a227; }
+        .legend-box.nav { background: white; border: 2px solid var(--border-blue); }
+
+        /* Page title */
+        .page-title {
+            background: var(--primary-blue);
+            color: white;
+            padding: 20px 40px;
+            margin: -40px -40px 40px;
+            border-bottom: 3px solid var(--border-blue);
+        }
+
+        .page-title h1 {
+            font-size: 28px;
+        }
+
+        .breadcrumb {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav a {
+                border-right: none;
+                border-bottom: 1px solid var(--grid-color);
+            }
+
+            .page {
+                padding: 20px;
+            }
+
+            .page-title {
+                margin: -20px -20px 20px;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-indicator">STRUCTURE v2.0 | PLAN DE CONSTRUCTION</div>
+
+    <!-- HEADER -->
+    <header class="blueprint-header">
+        <div class="header-content">
+            <div class="logo">GROUPE SB</div>
+            <div style="text-align: right; font-size: 12px;">
+                <div>RBQ: 1234-5678-90</div>
+                <div>Échelle: 1:1</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <ul>
+            <li><a href="#" class="active" onclick="showPage('accueil')">ACCUEIL</a></li>
+            <li><a href="#" onclick="showPage('apropos')">À PROPOS</a></li>
+            <li><a href="#" onclick="showPage('construction')">CONSTRUCTION SB</a></li>
+            <li><a href="#" onclick="showPage('deneigement')">DÉNEIGEMENT SB</a></li>
+            <li><a href="#" onclick="showPage('location')">LOCATION EXPERT</a></li>
+            <li><a href="#" onclick="showPage('pieux')">PIEUX VISTECH</a></li>
+            <li><a href="#" onclick="showPage('contact')">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- PAGE: ACCUEIL                                                 -->
+    <!-- ============================================================ -->
+    <div id="accueil" class="page active">
+        <div class="page-title">
+            <h1>ACCUEIL - PAGE PRINCIPALE</h1>
+            <div class="breadcrumb">Accueil > Page principale</div>
+        </div>
+
+        <!-- Legend (always visible on homepage) -->
+        <div class="legend">
+            <div class="legend-title">LÉGENDE - PLANIFICATIONS</div>
+            <div class="legend-items">
+                <div class="legend-item"><div class="legend-box blueprint"></div> Zone de contenu</div>
+                <div class="legend-item"><div class="legend-box image"></div> Image / Vidéo</div>
+                <div class="legend-item"><div class="legend-box text"></div> Zone de texte</div>
+                <div class="legend-item"><div class="legend-box nav"></div> Navigation</div>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">SECTION 1.0 - BANNIÈRE HÉRO</span>
+                <span class="section-id">HOM-01</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 500px;">
+                    [ VIDÉO HERO / IMAGE HAUTE RÉSOLUTION ]
+                    <div class="annotation" style="top: 10px; left: 10px;">Background: Vidéo drone golden hour</div>
+                </div>
+                <div class="annotation-dimensions">1920 x 1080px</div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">SECTION 2.0 - CHIFFRES CLÉS</span>
+                <span class="section-id">HOM-02</span>
+            </div>
+            <div class="section-content">
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 80px; padding: 20px;">[ ICONE ]</div>
+                        <h4>20+ ANS</h4>
+                        <p class="placeholder-text">D'expérience</p>
+                    </div>
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 80px; padding: 20px;">[ ICONE ]</div>
+                        <h4>50+</h4>
+                        <p class="placeholder-text">Employés</p>
+                    </div>
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 80px; padding: 20px;">[ ICONE ]</div>
+                        <h4>4 DIVISIONS</h4>
+                        <p class="placeholder-text">Services complets</p>
+                    </div>
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 80px; padding: 20px;">[ ICONE ]</div>
+                        <h4>NORD-DU-QC</h4>
+                        <p class="placeholder-text">Zone de service</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nos Divisions (merged section 3+4) -->
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">SECTION 3.0 - NOS DIVISIONS</span>
+                <span class="section-id">HOM-03</span>
+            </div>
+            <div class="section-content">
+                <div class="content-grid">
+                    <!-- Construction SB -->
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 150px;">[ IMAGE ]</div>
+                        <h4>CONSTRUCTION SB</h4>
+                        <p class="placeholder-text">Construction résidentielle et commerciale, spécialité béton</p>
+                        <ul>
+                            <li>Excavation et drain de fondation</li>
+                            <li>Réparation de fondation</li>
+                            <li>Paysagement et installation clôture</li>
+                            <li>Isolation uréthane et laine soufflée</li>
+                        </ul>
+                        <a href="#" class="voir-plus" onclick="showPage('construction')">[ VOIR PLUS &rarr; ]</a>
+                    </div>
+                    <!-- Déneigement SB -->
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 150px;">[ IMAGE ]</div>
+                        <h4>DÉNEIGEMENT SB</h4>
+                        <p class="placeholder-text">Déneigement résidentiel, commercial et industriel</p>
+                        <ul>
+                            <li>Déneigement sur appel et à la main</li>
+                            <li>Transport de neige</li>
+                            <li>Vente de matériel granulaire</li>
+                            <li>Transport en vrac 10/12 roues</li>
+                        </ul>
+                        <a href="#" class="voir-plus" onclick="showPage('deneigement')">[ VOIR PLUS &rarr; ]</a>
+                    </div>
+                    <!-- Location Expert -->
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 150px;">[ IMAGE ]</div>
+                        <h4>LOCATION EXPERT</h4>
+                        <p class="placeholder-text">Location d'outils et de machinerie</p>
+                        <ul>
+                            <li>Outils portatifs et spécialisés</li>
+                            <li>Machinerie lourde</li>
+                            <li>Équipement saisonnier</li>
+                        </ul>
+                        <a href="#" class="voir-plus" onclick="showPage('location')">[ VOIR PLUS &rarr; ]</a>
+                    </div>
+                    <!-- Pieux Vistech -->
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 150px;">[ IMAGE ]</div>
+                        <h4>PIEUX VISTECH</h4>
+                        <p class="placeholder-text">Installation de pieux vissés certifiés</p>
+                        <ul>
+                            <li>Fondations résidentielles</li>
+                            <li>Structures commerciales</li>
+                            <li>Terrasses, clôtures, solarium</li>
+                        </ul>
+                        <a href="#" class="voir-plus" onclick="showPage('pieux')">[ VOIR PLUS &rarr; ]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">SECTION 4.0 - APPEL À L'ACTION</span>
+                <span class="section-id">HOM-04</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 200px;">
+                    [ BANNIÈRE CTA ]
+                    <div class="annotation" style="top: 10px; left: 10px;">"Contactez-nous pour un devis gratuit"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE: À PROPOS                                                -->
+    <!-- ============================================================ -->
+    <div id="apropos" class="page">
+        <div class="page-title">
+            <h1>À PROPOS</h1>
+            <div class="breadcrumb">Accueil > À propos</div>
+        </div>
+
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">SECTION 1.0 - HISTOIRE DE L'ENTREPRISE</span>
+                <span class="section-id">ABT-01</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 300px; float: right; width: 40%; margin-left: 20px;">[ IMAGE ]</div>
+                <div class="placeholder-text" style="height: 250px;">
+                    [ TEXTE: Histoire de Groupe SB ]
+                    <br><br>
+                    Présenter l'histoire de l'entreprise, les valeurs, la mission...
+                </div>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">SECTION 2.0 - NOS VALEURS</span>
+                <span class="section-id">ABT-02</span>
+            </div>
+            <div class="section-content">
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 60px;">[ ICONE ]</div>
+                        <h4>ÉCOUTE</h4>
+                        <p class="placeholder-text">À l'écoute des besoins</p>
+                    </div>
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 60px;">[ ICONE ]</div>
+                        <h4>RAPIDITÉ</h4>
+                        <p class="placeholder-text">Service rapide et efficace</p>
+                    </div>
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 60px;">[ ICONE ]</div>
+                        <h4>PROFESSIONNALISME</h4>
+                        <p class="placeholder-text">Expertise reconnue</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">SECTION 3.0 - ÉQUIPE / CERTIFICATIONS</span>
+                <span class="section-id">ABT-03</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 250px;">[ IMAGES ÉQUIPE / LOGOS CERTIFICATIONS ]</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE: CONSTRUCTION SB                                         -->
+    <!-- ============================================================ -->
+    <div id="construction" class="page">
+        <div class="page-title" style="background: #e67e22;">
+            <h1>CONSTRUCTION SB</h1>
+            <div class="breadcrumb">Accueil > Construction SB</div>
+        </div>
+
+        <!-- Hero -->
+        <div class="section-block">
+            <div class="section-header" style="background: #fff3e0;">
+                <span class="section-title">SECTION 1.0 - HERO CONSTRUCTION</span>
+                <span class="section-id">CON-01</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 400px;">
+                    [ IMAGE HERO - CHANTIER DE CONSTRUCTION ]
+                    <div class="annotation" style="top: 10px; left: 10px;">Titre: "Construction résidentielle et commerciale"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services -->
+        <div class="section-block">
+            <div class="section-header" style="background: #fff3e0;">
+                <span class="section-title">SECTION 2.0 - NOS SERVICES</span>
+                <span class="section-id">CON-02</span>
+            </div>
+            <div class="section-content">
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>CONSTRUCTION</h4>
+                        <ul>
+                            <li>Construction résidentielle</li>
+                            <li>Construction commerciale</li>
+                            <li>Spécialité béton</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <h4>EXCAVATION</h4>
+                        <ul>
+                            <li>Excavation générale</li>
+                            <li>Drain de fondation</li>
+                            <li>Réparation de fondation</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <h4>AMÉNAGEMENT</h4>
+                        <ul>
+                            <li>Paysagement</li>
+                            <li>Installation clôture à maille</li>
+                            <li>Nettoyage de pavé</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <h4>ISOLATION</h4>
+                        <ul>
+                            <li>Isolation uréthane</li>
+                            <li>Laine soufflée</li>
+                            <li>Membrane de fondation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Galerie de projets -->
+        <div class="section-block">
+            <div class="section-header" style="background: #fff3e0;">
+                <span class="section-title">SECTION 3.0 - GALERIE DE PROJETS</span>
+                <span class="section-id">CON-03</span>
+            </div>
+            <div class="section-content">
+                <div class="content-grid">
+                    <div class="placeholder" style="height: 200px;">[ PHOTO PROJET 1 ]</div>
+                    <div class="placeholder" style="height: 200px;">[ PHOTO PROJET 2 ]</div>
+                    <div class="placeholder" style="height: 200px;">[ PHOTO PROJET 3 ]</div>
+                    <div class="placeholder" style="height: 200px;">[ PHOTO PROJET 4 ]</div>
+                    <div class="placeholder" style="height: 200px;">[ PHOTO PROJET 5 ]</div>
+                    <div class="placeholder" style="height: 200px;">[ PHOTO PROJET 6 ]</div>
+                </div>
+                <div class="annotation" style="position: relative; margin-top: 10px;">Grille de photos avant/après ou projets complétés</div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="section-block">
+            <div class="section-header" style="background: #fff3e0;">
+                <span class="section-title">SECTION 4.0 - APPEL À L'ACTION</span>
+                <span class="section-id">CON-04</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 200px;">
+                    [ BANNIÈRE CTA ]
+                    <div class="annotation" style="top: 10px; left: 10px;">"Demandez une soumission gratuite pour votre projet de construction"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE: DÉNEIGEMENT SB                                          -->
+    <!-- ============================================================ -->
+    <div id="deneigement" class="page">
+        <div class="page-title" style="background: #3498db;">
+            <h1>DÉNEIGEMENT SB</h1>
+            <div class="breadcrumb">Accueil > Déneigement SB</div>
+        </div>
+
+        <!-- Hero -->
+        <div class="section-block">
+            <div class="section-header" style="background: #ebf5fb;">
+                <span class="section-title">SECTION 1.0 - HERO DÉNEIGEMENT</span>
+                <span class="section-id">DEN-01</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 400px;">
+                    [ IMAGE HERO - DÉNEIGEMENT EN ACTION ]
+                    <div class="annotation" style="top: 10px; left: 10px;">Titre: "Déneigement résidentiel, commercial et industriel"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services -->
+        <div class="section-block">
+            <div class="section-header" style="background: #ebf5fb;">
+                <span class="section-title">SECTION 2.0 - NOS SERVICES</span>
+                <span class="section-id">DEN-02</span>
+            </div>
+            <div class="section-content">
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>DÉNEIGEMENT</h4>
+                        <ul>
+                            <li>Résidentiel</li>
+                            <li>Commercial</li>
+                            <li>Industriel</li>
+                            <li>Sur appel</li>
+                            <li>À la main</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <h4>TRANSPORT</h4>
+                        <ul>
+                            <li>Transport de neige</li>
+                            <li>Transport en vrac 10 roues</li>
+                            <li>Transport en vrac 12 roues</li>
+                            <li>Remorques 2-3 essieux</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <h4>MATÉRIAUX</h4>
+                        <ul>
+                            <li>Vente de matériel granulaire</li>
+                            <li>Sel et abrasifs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info saisonnière -->
+        <div class="section-block">
+            <div class="section-header" style="background: #ebf5fb;">
+                <span class="section-title">SECTION 3.0 - INFORMATION SAISONNIÈRE</span>
+                <span class="section-id">DEN-03</span>
+            </div>
+            <div class="section-content">
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>SAISON DE DÉNEIGEMENT</h4>
+                        <p class="placeholder-text">[ Période d'opération : novembre à avril ]</p>
+                        <p class="placeholder-text">[ Horaire de service, temps de réponse ]</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>ZONE DE SERVICE</h4>
+                        <p class="placeholder-text">[ Carte ou description des zones desservies : Chibougamau, Chapais, environs ]</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>CONTRATS SAISONNIERS</h4>
+                        <p class="placeholder-text">[ Information sur les contrats saisonniers résidentiels et commerciaux ]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="section-block">
+            <div class="section-header" style="background: #ebf5fb;">
+                <span class="section-title">SECTION 4.0 - APPEL À L'ACTION</span>
+                <span class="section-id">DEN-04</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 200px;">
+                    [ BANNIÈRE CTA ]
+                    <div class="annotation" style="top: 10px; left: 10px;">"Réservez votre contrat de déneigement pour la saison"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE: LOCATION EXPERT                                         -->
+    <!-- ============================================================ -->
+    <div id="location" class="page">
+        <div class="page-title" style="background: #27ae60;">
+            <h1>LOCATION EXPERT</h1>
+            <div class="breadcrumb">Accueil > Location Expert</div>
+        </div>
+
+        <!-- Hero -->
+        <div class="section-block">
+            <div class="section-header" style="background: #e9f7ef;">
+                <span class="section-title">SECTION 1.0 - HERO LOCATION</span>
+                <span class="section-id">LOC-01</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 400px;">
+                    [ IMAGE HERO - ÉQUIPEMENT DE LOCATION ]
+                    <div class="annotation" style="top: 10px; left: 10px;">Titre: "Location d'outils et de machinerie"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Catalogue d'équipements -->
+        <div class="section-block">
+            <div class="section-header" style="background: #e9f7ef;">
+                <span class="section-title">SECTION 2.0 - CATALOGUE D'ÉQUIPEMENTS</span>
+                <span class="section-id">LOC-02</span>
+            </div>
+            <div class="section-content">
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 100px;">[ IMAGE ]</div>
+                        <h4>OUTILS PORTATIFS</h4>
+                        <p class="placeholder-text">[ Liste : perceuses, scies, meuleuses, etc. ]</p>
+                    </div>
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 100px;">[ IMAGE ]</div>
+                        <h4>MACHINERIE LOURDE</h4>
+                        <p class="placeholder-text">[ Liste : excavatrice, chargeuse, compacteur, etc. ]</p>
+                    </div>
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 100px;">[ IMAGE ]</div>
+                        <h4>ÉQUIPEMENT SPÉCIALISÉ</h4>
+                        <p class="placeholder-text">[ Liste : génératrices, pompes, chauffage, etc. ]</p>
+                    </div>
+                    <div class="content-card">
+                        <div class="placeholder" style="height: 100px;">[ IMAGE ]</div>
+                        <h4>ÉQUIPEMENT SAISONNIER</h4>
+                        <p class="placeholder-text">[ Liste : souffleuses, remorques, équipement de jardinage, etc. ]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conditions de location -->
+        <div class="section-block">
+            <div class="section-header" style="background: #e9f7ef;">
+                <span class="section-title">SECTION 3.0 - CONDITIONS DE LOCATION</span>
+                <span class="section-id">LOC-03</span>
+            </div>
+            <div class="section-content">
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>TARIFS</h4>
+                        <p class="placeholder-text">[ Grille tarifaire : jour, semaine, mois ]</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>MODALITÉS</h4>
+                        <p class="placeholder-text">[ Dépôt, pièce d'identité, assurances, livraison disponible ]</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>HEURES D'OUVERTURE</h4>
+                        <p class="placeholder-text">[ Horaire du comptoir de location ]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="section-block">
+            <div class="section-header" style="background: #e9f7ef;">
+                <span class="section-title">SECTION 4.0 - APPEL À L'ACTION</span>
+                <span class="section-id">LOC-04</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 200px;">
+                    [ BANNIÈRE CTA ]
+                    <div class="annotation" style="top: 10px; left: 10px;">"Appelez-nous pour vérifier la disponibilité de l'équipement"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE: PIEUX VISTECH                                           -->
+    <!-- ============================================================ -->
+    <div id="pieux" class="page">
+        <div class="page-title" style="background: #8e44ad;">
+            <h1>PIEUX VISTECH</h1>
+            <div class="breadcrumb">Accueil > Pieux Vistech</div>
+        </div>
+
+        <!-- Hero -->
+        <div class="section-block">
+            <div class="section-header" style="background: #f4ecf7;">
+                <span class="section-title">SECTION 1.0 - HERO PIEUX VISTECH</span>
+                <span class="section-id">PIE-01</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 400px;">
+                    [ IMAGE HERO - INSTALLATION DE PIEUX VISSÉS ]
+                    <div class="annotation" style="top: 10px; left: 10px;">Titre: "Pieux vissés certifiés Vistech"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services -->
+        <div class="section-block">
+            <div class="section-header" style="background: #f4ecf7;">
+                <span class="section-title">SECTION 2.0 - NOS SERVICES</span>
+                <span class="section-id">PIE-02</span>
+            </div>
+            <div class="section-content">
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>INSTALLATION DE PIEUX VISSÉS</h4>
+                        <ul>
+                            <li>Fondations résidentielles</li>
+                            <li>Structures commerciales</li>
+                            <li>Terrasses et patios</li>
+                            <li>Clôtures et solarium</li>
+                            <li>Agrandissements</li>
+                        </ul>
+                    </div>
+                    <div class="content-card">
+                        <h4>TYPES DE PROJETS</h4>
+                        <ul>
+                            <li>Nouvelles constructions</li>
+                            <li>Rénovations / stabilisation</li>
+                            <li>Bâtiments accessoires (cabanon, garage)</li>
+                            <li>Passerelles et quais</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comment ça fonctionne -->
+        <div class="section-block">
+            <div class="section-header" style="background: #f4ecf7;">
+                <span class="section-title">SECTION 3.0 - COMMENT ÇA FONCTIONNE</span>
+                <span class="section-id">PIE-03</span>
+            </div>
+            <div class="section-content">
+                <div class="content-grid">
+                    <div class="content-card">
+                        <h4>ÉTAPE 1 - ÉVALUATION</h4>
+                        <div class="placeholder" style="height: 80px;">[ ICONE ]</div>
+                        <p class="placeholder-text">Analyse du terrain et du projet pour déterminer le type et le nombre de pieux nécessaires</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>ÉTAPE 2 - INSTALLATION</h4>
+                        <div class="placeholder" style="height: 80px;">[ ICONE ]</div>
+                        <p class="placeholder-text">Vissage des pieux dans le sol avec machinerie spécialisée, sans excavation majeure</p>
+                    </div>
+                    <div class="content-card">
+                        <h4>ÉTAPE 3 - FINITION</h4>
+                        <div class="placeholder" style="height: 80px;">[ ICONE ]</div>
+                        <p class="placeholder-text">Ajustement final, installation des connecteurs et validation de la capacité portante</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="section-block">
+            <div class="section-header" style="background: #f4ecf7;">
+                <span class="section-title">SECTION 4.0 - APPEL À L'ACTION</span>
+                <span class="section-id">PIE-04</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 200px;">
+                    [ BANNIÈRE CTA ]
+                    <div class="annotation" style="top: 10px; left: 10px;">"Obtenez une évaluation gratuite pour vos pieux vissés"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PAGE: CONTACT                                                 -->
+    <!-- ============================================================ -->
+    <div id="contact" class="page">
+        <div class="page-title">
+            <h1>NOUS JOINDRE</h1>
+            <div class="breadcrumb">Accueil > Contact</div>
+        </div>
+
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">COORDONNÉES</span>
+                <span class="section-id">CNT-01</span>
+            </div>
+            <div class="section-content">
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h4>SIEGE SOCIAL</h4>
+                        <p>239 3e Rue</p>
+                        <p>Chibougamau, QC</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>TÉLÉPHONE</h4>
+                        <p>Construction: 418-770-7506</p>
+                        <p>Déneigement: 418-770-4657</p>
+                        <p>Location: 418-770-8243</p>
+                    </div>
+                    <div class="contact-card">
+                        <h4>COURRIEL</h4>
+                        <p>constructions-sb@hotmail.com</p>
+                        <p>deneigementsb@hotmail.com</p>
+                        <p>locationexpert@hotmail.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">FORMULAIRE DE CONTACT</span>
+                <span class="section-id">CNT-02</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 400px;">
+                    [ FORMULAIRE ]
+                    <br><br>
+                    - Nom
+                    <br>
+                    - Téléphone
+                    <br>
+                    - Courriel
+                    <br>
+                    - Service interested
+                    <br>
+                    - Message
+                    <br>
+                    - Bouton Soumettre
+                </div>
+            </div>
+        </div>
+
+        <div class="section-block">
+            <div class="section-header">
+                <span class="section-title">CARTE (OPTIONNEL)</span>
+                <span class="section-id">CNT-03</span>
+            </div>
+            <div class="section-content">
+                <div class="placeholder" style="height: 300px;">[ CARTE GOOGLE MAPS ]</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- FOOTER (outside all page divs - always visible)               -->
+    <!-- ============================================================ -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>GROUPE SB</h4>
+                <p style="color: #aaa; font-size: 12px;">239 3e Rue, Chibougamau</p>
+            </div>
+            <div class="footer-section">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="#" onclick="showPage('accueil')">Accueil</a></li>
+                    <li><a href="#" onclick="showPage('apropos')">À propos</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Nos Divisions</h4>
+                <ul>
+                    <li><a href="#" onclick="showPage('construction')">Construction SB</a></li>
+                    <li><a href="#" onclick="showPage('deneigement')">Déneigement SB</a></li>
+                    <li><a href="#" onclick="showPage('location')">Location Expert</a></li>
+                    <li><a href="#" onclick="showPage('pieux')">Pieux Vistech</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="#">418-770-7506</a></li>
+                    <li><a href="#">constructions-sb@hotmail.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #333; color: #666; font-size: 11px;">
+            &copy; 2025 GROUPE SB - TOUS DROITS RÉSERVÉS | PLAN DE STRUCTURE v2.0
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            event.preventDefault();
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+
+            document.getElementById(pageId).classList.add('active');
+
+            document.querySelectorAll('nav a').forEach(a => {
+                if (a.getAttribute('onclick')?.includes(pageId)) {
+                    a.classList.add('active');
+                }
+            });
+
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>

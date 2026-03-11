@@ -1,0 +1,38 @@
+Journal :
+
+--- 2026-03-10 ---
+- Step 1 completed: Organized folder structure
+  - Created docs/ folder for documentation
+  - Created assets/ folder (for future use)
+  - Moved all documentation files to docs/
+  - Verified image assets in image/ folder
+
+- Step 2 REDONE: Complete website structure (structure.html)
+  - Blueprint/construction plan visual style with grid background
+  - ALL PAGES INCLUDED: Accueil, À propos, Services, Construction SB, Déneigement SB, Location Expert, Pieux Vistech, Contact
+  - Clear section IDs and annotations like a real blueprint
+  - Placeholder zones clearly marked (images, text)
+  - Legend showing content types
+  - Navigation works via JavaScript to switch pages
+  - Professional presentation for $3000 website level
+  - NEED TO: Publish to GitHub
+
+- Step 2 IMPROVED (by second instance):
+  - Removed redundant "Services" page — services covered by division pages
+  - Merged homepage "Divisions" + "Services" into one clean section
+  - Fleshed out all 4 division pages (were basically empty before)
+  - Footer moved outside page divs — now visible on all pages
+  - Nav: removed SERVICES link, kept 4 division links
+  - Version bumped to v2.0
+
+- Step 3 IMPROVED (by second instance):
+  - All 3 designs now use brand colors (#ef6006, #d7cece, #090909)
+  - All text converted to French
+  - Design 1: "Frosted Industrial" — golden hour bg, frosted glass, logo, orange CTA, division bar
+  - Design 2: "Liquid Glass & Chrome" — orange/steel liquid blob, chrome text, floating nav dock
+  - Design 3: REPLACED "Rugged Neumorphic" with "Industrial Dark" — dark minimalism, bold orange vertical bar, Swiss-grid layout, stats counters, machinery cutout. Based on reference image in "design 3/" folder.
+  - Selection form REMOVED (client replies by email)
+
+- Process Review.md created in root — tips for Dylan's workflow
+
+- TODO: Publish to GitHub Pages + write client email (see "docs/TODO for next instance.txt")

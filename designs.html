@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groupe SB - Choix de Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0ece8;
+            color: #333;
+        }
+
+        /* ── Intro ── */
+        .intro {
+            text-align: center;
+            padding: 50px 20px;
+            background: #090909;
+            margin-bottom: 50px;
+            border-bottom: 4px solid #ef6006;
+        }
+
+        .intro h1 {
+            color: #ef6006;
+            font-size: 34px;
+            margin-bottom: 15px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .intro p {
+            color: #d7cece;
+            max-width: 720px;
+            margin: 0 auto;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .intro .note {
+            background: rgba(239, 96, 6, 0.12);
+            padding: 16px 24px;
+            margin-top: 24px;
+            border: 1px solid rgba(239, 96, 6, 0.4);
+            font-size: 14px;
+            color: #d7cece;
+            display: inline-block;
+            border-radius: 8px;
+        }
+
+        .intro .note strong {
+            color: #ef6006;
+        }
+
+        /* ── Design Sections ── */
+        .design-section {
+            margin: 0 40px 60px;
+            background: white;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .design-title {
+            background: #090909;
+            color: white;
+            padding: 22px 30px;
+            font-size: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .design-tag {
+            font-size: 11px;
+            background: rgba(239, 96, 6, 0.25);
+            color: #ef6006;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .design-content {
+            padding: 0;
+        }
+
+        .design-desc {
+            padding: 24px 30px;
+            background: #faf9f8;
+            border-top: 1px solid #eee;
+            line-height: 1.7;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .design-desc strong {
+            color: #090909;
+        }
+
+        /* ════════════════════════════════════════════════════════════
+           DESIGN 1: FROSTED INDUSTRIAL
+           ════════════════════════════════════════════════════════════ */
+        .design1-hero {
+            position: relative;
+            height: 520px;
+            overflow: hidden;
+        }
+
+        /* Construction-site golden-hour background */
+        .design1-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(170deg, rgba(239,96,6,0.25) 0%, transparent 40%),
+                linear-gradient(350deg, rgba(239,96,6,0.18) 0%, transparent 50%),
+                linear-gradient(135deg, #1a1410 0%, #2c1f14 30%, #1e1611 60%, #0e0b08 100%);
+        }
+
+        /* Diagonal construction stripes */
+        .design1-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 80px,
+                rgba(239,96,6,0.04) 80px,
+                rgba(239,96,6,0.04) 82px
+            );
+        }
+
+        /* Grid dots for industrial texture */
+        .design1-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(215,206,206,0.06) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* Floating dust particles */
+        .design1-particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .design1-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(239,96,6,0.4);
+            border-radius: 50%;
+            animation: floatParticle 6s ease-in-out infinite;
+        }
+
+        .design1-particle:nth-child(1) { left: 15%; top: 20%; animation-delay: 0s; animation-duration: 7s; }
+        .design1-particle:nth-child(2) { left: 45%; top: 60%; animation-delay: 1s; animation-duration: 5s; }
+        .design1-particle:nth-child(3) { left: 70%; top: 30%; animation-delay: 2s; animation-duration: 8s; }
+        .design1-particle:nth-child(4) { left: 85%; top: 70%; animation-delay: 0.5s; animation-duration: 6s; }
+        .design1-particle:nth-child(5) { left: 30%; top: 80%; animation-delay: 3s; animation-duration: 7s; }
+        .design1-particle:nth-child(6) { left: 60%; top: 15%; animation-delay: 1.5s; animation-duration: 9s; }
+
+        @keyframes floatParticle {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+            50% { transform: translateY(-40px) scale(1.5); opacity: 0.8; }
+        }
+
+        /* SB watermark behind content */
+        .design1-watermark {
+            position: absolute;
+            top: 50%;
+            right: 6%;
+            transform: translateY(-50%);
+            font-size: 300px;
+            font-weight: 900;
+            color: rgba(215,206,206,0.04);
+            font-family: 'Inter', 'Arial Black', sans-serif;
+            letter-spacing: -12px;
+            user-select: none;
+            line-height: 1;
+        }
+
+        /* Logo placement */
+        .design1-logo {
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            z-index: 5;
+        }
+
+        .design1-logo img {
+            height: 70px;
+            width: auto;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+        }
+
+        /* Orange glow accent light */
+        .design1-glow {
+            position: absolute;
+            top: -80px;
+            right: 20%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(239,96,6,0.15) 0%, transparent 70%);
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Frosted glass card */
+        .design1-frost {
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            transform: translateY(-50%);
+            width: 56%;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 20px;
+            padding: 48px 50px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255,255,255,0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            z-index: 3;
+        }
+
+        .design1 h1 {
+            font-family: 'Inter', 'Arial Black', sans-serif;
+            font-size: 50px;
+            color: white;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 900;
+            line-height: 1.1;
+        }
+
+        .design1 h1 span {
+            color: #ef6006;
+        }
+
+        .design1 .tagline {
+            font-size: 19px;
+            color: rgba(215,206,206,0.9);
+            margin-bottom: 28px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .design1 .cta {
+            display: inline-block;
+            background: #ef6006;
+            color: white;
+            padding: 16px 42px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            border-radius: 10px;
+            box-shadow:
+                0 4px 16px rgba(239,96,6,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.2),
+                inset 0 -2px 4px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .design1 .cta:hover {
+            background: #ff7a1a;
+            box-shadow:
+                0 6px 28px rgba(239,96,6,0.55),
+                inset 0 1px 0 rgba(255,255,255,0.2),
+                inset 0 -2px 4px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .design1-tags {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+
+        .design1-tag {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            padding: 9px 18px;
+            border-radius: 24px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.85);
+            border: 1px solid rgba(255,255,255,0.1);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .design1-tag strong {
+            color: #ef6006;
+            margin-right: 4px;
+        }
+
+        /* Divisions row for Design 1 */
+        .design1-divisions {
+            display: flex;
+            gap: 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 4;
+        }
+
+        .design1-div {
+            flex: 1;
+            padding: 16px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.85);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255,255,255,0.08);
+            transition: background 0.3s;
+        }
+
+        .design1-div:last-child { border-right: none; }
+
+        .design1-div:hover {
+            background: rgba(239,96,6,0.3);
+        }
+
+        .design1-div-icon {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+
+        /* ════════════════════════════════════════════════════════════
+           DESIGN 2: LIQUID GLASS & CHROME
+           ════════════════════════════════════════════════════════════ */
+        .design2-hero {
+            position: relative;
+            height: 520px;
+            background: linear-gradient(160deg, #090909 0%, #1a1816 40%, #0e0c0a 70%, #090909 100%);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Subtle metallic grain */
+        .design2-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        /* Liquid glass blob with orange/steel reflections */
+        .design2-liquid {
+            position: absolute;
+            width: 480px;
+            height: 480px;
+            right: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background:
+                radial-gradient(ellipse at 30% 30%, rgba(239,96,6,0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 70%, rgba(215,206,206,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(239,96,6,0.08) 0%, transparent 70%),
+                linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: liquidMorph 8s ease-in-out infinite;
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(239,96,6,0.15);
+            box-shadow:
+                0 0 80px rgba(239,96,6,0.2),
+                0 0 160px rgba(239,96,6,0.08),
+                inset 0 0 60px rgba(215,206,206,0.05),
+                inset 0 -20px 40px rgba(239,96,6,0.1);
+        }
+
+        .design2-liquid::before {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 20%;
+            width: 60%;
+            height: 30%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 100%);
+            border-radius: 50%;
+            filter: blur(10px);
+        }
+
+        @keyframes liquidMorph {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: translateY(-50%) rotate(0deg); }
+            33% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; transform: translateY(-52%) rotate(2deg); }
+            66% { border-radius: 50% 30% 50% 60% / 40% 70% 40% 50%; transform: translateY(-48%) rotate(-1deg); }
+        }
+
+        /* Ambient orange light reflection on left wall */
+        .design2-ambient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(239,96,6,0.05) 0%, transparent 100%);
+        }
+
+        .design2-main {
+            position: relative;
+            z-index: 2;
+            padding: 0 60px;
+            width: 58%;
+        }
+
+        .design2 h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 58px;
+            background: linear-gradient(135deg, #d7cece 0%, #f0edec 40%, #d7cece 60%, #a8a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: 3px;
+            font-weight: 900;
+            text-transform: uppercase;
+            animation: shimmerText 6s ease-in-out infinite;
+            background-size: 200% 100%;
+        }
+
+        @keyframes shimmerText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .design2 .tagline {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 17px;
+            color: #d7cece;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .design2 .services-list {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 36px;
+            flex-wrap: wrap;
+        }
+
+        .design2 .service-tag {
+            background: rgba(239,96,6,0.08);
+            border: 1px solid rgba(239,96,6,0.2);
+            padding: 10px 22px;
+            font-size: 13px;
+            color: #d7cece;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .design2 .service-tag:hover {
+            background: rgba(239,96,6,0.2);
+            border-color: rgba(239,96,6,0.4);
+            color: white;
+        }
+
+        .design2 .cta-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .design2 .cta-primary {
+            display: inline-block;
+            background: rgba(239,96,6,0.15);
+            border: 1px solid rgba(239,96,6,0.4);
+            color: #ef6006;
+            padding: 15px 38px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .design2 .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(239,96,6,0.6), transparent);
+        }
+
+        .design2 .cta-primary:hover {
+            background: rgba(239,96,6,0.3);
+            box-shadow: 0 0 30px rgba(239,96,6,0.2);
+        }
+
+        .design2 .cta-secondary {
+            display: inline-block;
+            color: rgba(215,206,206,0.6);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 15px 20px;
+        }
+
+        .design2 .cta-secondary:hover {
+            color: #d7cece;
+        }
+
+        /* Floating nav dock */
+        .design2-nav {
+            position: absolute;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(9,9,9,0.7);
+            backdrop-filter: blur(24px);
+            padding: 14px 36px;
+            border-radius: 40px;
+            border: 1px solid rgba(239,96,6,0.12);
+            display: flex;
+            gap: 28px;
+            z-index: 3;
+        }
+
+        .design2-nav a {
+            color: rgba(215,206,206,0.5);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .design2-nav a:hover,
+        .design2-nav a.active {
+            color: #ef6006;
+        }
+
+
+        /* ════════════════════════════════════════════════════════════
+           DESIGN 3: MODERN INDUSTRIAL DARK
+           ════════════════════════════════════════════════════════════ */
+        .design3-hero {
+            position: relative;
+            height: 580px;
+            background: #0d0d0d;
+            overflow: hidden;
+            display: flex;
+            align-items: stretch;
+        }
+
+        /* Subtle grit/noise texture */
+        .design3-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+            opacity: 0.6;
+            z-index: 1;
+        }
+
+        /* Orange vertical accent bar — geometric anchor */
+        .design3-bar {
+            position: absolute;
+            top: 0;
+            right: 32%;
+            width: 220px;
+            height: 100%;
+            background: #ef6006;
+            z-index: 2;
+            clip-path: polygon(15% 0, 100% 0, 85% 100%, 0% 100%);
+        }
+
+        /* Secondary thinner accent line */
+        .design3-bar-thin {
+            position: absolute;
+            top: 0;
+            right: 29%;
+            width: 4px;
+            height: 100%;
+            background: rgba(239,96,6,0.4);
+            z-index: 3;
+        }
+
+        /* Left content area */
+        .design3-left {
+            position: relative;
+            z-index: 4;
+            width: 52%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 50px 60px 60px;
+        }
+
+        /* Nav bar at top */
+        .design3-nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            padding: 22px 60px;
+            gap: 36px;
+        }
+
+        .design3-nav-logo {
+            height: 48px;
+            width: auto;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+            margin-right: auto;
+        }
+
+        .design3-nav a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .design3-nav a.d3-active {
+            color: #ef6006;
+        }
+
+        .design3-nav a:hover {
+            color: white;
+        }
+
+        .design3 h1 {
+            font-family: 'Inter', 'Arial Black', sans-serif;
+            font-size: 52px;
+            color: white;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .design3 h1 .d3-orange {
+            color: #ef6006;
+        }
+
+        .design3 .d3-subtitle {
+            font-size: 15px;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.7;
+            margin-bottom: 32px;
+            max-width: 420px;
+        }
+
+        .design3 .d3-cta-row {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .design3 .d3-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+
+        .design3 .d3-cta-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #ef6006;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(239,96,6,0.3);
+        }
+
+        .design3 .d3-cta:hover .d3-cta-arrow {
+            transform: translateX(4px);
+            box-shadow: 0 6px 24px rgba(239,96,6,0.5);
+        }
+
+        /* Right side — imagery area with the orange bar behind */
+        .design3-right {
+            position: relative;
+            z-index: 3;
+            width: 48%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Machinery cut-out placeholder */
+        .design3-machine {
+            position: relative;
+            z-index: 5;
+            width: 380px;
+            height: 340px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(-10px 10px 30px rgba(0,0,0,0.6));
+        }
+
+        .design3-machine-inner {
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            border: 2px dashed rgba(255,255,255,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.2);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .design3-machine-inner .d3-machine-icon {
+            font-size: 60px;
+            margin-bottom: 12px;
+            opacity: 0.3;
+        }
+
+        /* Stats row at bottom */
+        .design3-stats {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            display: flex;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .design3-stat {
+            flex: 1;
+            padding: 22px 30px;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            text-align: center;
+        }
+
+        .design3-stat:last-child {
+            border-right: none;
+        }
+
+        .design3-stat-number {
+            font-size: 32px;
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .design3-stat-number .d3-dot {
+            color: #ef6006;
+        }
+
+        .design3-stat-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .design3-stat-divider {
+            width: 30px;
+            height: 2px;
+            background: #ef6006;
+            margin: 6px auto;
+        }
+
+        /* Services icons row */
+        .design3-services-row {
+            display: flex;
+            gap: 28px;
+            margin-top: 36px;
+        }
+
+        .design3-svc {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .design3-svc-icon {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #ef6006;
+            transition: all 0.3s;
+        }
+
+        .design3-svc:hover .design3-svc-icon {
+            background: rgba(239,96,6,0.1);
+            border-color: rgba(239,96,6,0.3);
+        }
+
+        .design3-svc-label {
+            font-size: 10px;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .design1-frost {
+                width: 88%;
+                padding: 28px;
+                left: 6%;
+            }
+
+            .design1 h1 { font-size: 30px; }
+            .design1-watermark { font-size: 160px; }
+
+            .design2-main, .design3-content { width: 100%; }
+            .design2 h1 { font-size: 36px; }
+            .design2-liquid { width: 300px; height: 300px; right: -100px; }
+
+            .design3-left { width: 100%; padding: 80px 24px 100px; }
+            .design3-right { display: none; }
+            .design3-bar { right: 0; width: 100px; }
+            .design3 h1 { font-size: 32px; }
+            .design3-stats { flex-wrap: wrap; }
+            .design3-stat { flex: 1 1 48%; }
+            .design3-nav { padding: 16px 24px; gap: 16px; }
+            .design3-nav a { font-size: 11px; }
+            .design3-services-row { gap: 16px; }
+
+            .design-section { margin: 0 12px 40px; }
+
+            .design1-divisions { flex-wrap: wrap; }
+            .design1-div { flex: 1 1 48%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="intro">
+        <h1>Groupe SB — Sélection de Design</h1>
+        <p>Choisissez le style qui correspond le mieux à votre vision pour le site web de Groupe SB, votre partenaire en construction à Chibougamau. Chaque design présente une approche visuelle unique pour la section hero (bannière principale).</p>
+        <div class="note">
+            <strong>Note :</strong> Les designs ci-dessous montrent UNIQUEMENT la section Hero. Le reste du site suivra le même style une fois votre choix confirmé.
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         DESIGN 1: FROSTED INDUSTRIAL
+         ═══════════════════════════════════════════════════════ -->
+    <div class="design-section">
+        <div class="design-title">
+            <span>Design 1 : « Frosted Industrial »</span>
+            <span class="design-tag">GLASSMORPHISME + CHANTIER</span>
+        </div>
+        <div class="design-content">
+            <div class="design1-hero design1">
+                <div class="design1-bg"></div>
+                <div class="design1-glow"></div>
+                <div class="design1-particles">
+                    <span class="design1-particle"></span>
+                    <span class="design1-particle"></span>
+                    <span class="design1-particle"></span>
+                    <span class="design1-particle"></span>
+                    <span class="design1-particle"></span>
+                    <span class="design1-particle"></span>
+                </div>
+                <div class="design1-logo">
+                    <img src="image/Constructions SB logo.png" alt="Groupe SB">
+                </div>
+                <div class="design1-watermark">SB</div>
+                <div class="design1-frost">
+                    <h1>Groupe <span>SB</span></h1>
+                    <p class="tagline">Bâtir l'avenir du Nord-du-Québec</p>
+                    <a href="#contact" class="cta">Demander une soumission</a>
+                    <div class="design1-tags">
+                        <span class="design1-tag"><strong>RBQ</strong> Licence valide</span>
+                        <span class="design1-tag"><strong>20+</strong> ans d'expérience</span>
+                        <span class="design1-tag"><strong>4</strong> divisions</span>
+                    </div>
+                </div>
+                <div class="design1-divisions">
+                    <div class="design1-div"><span class="design1-div-icon">🏗️</span>Construction</div>
+                    <div class="design1-div"><span class="design1-div-icon">❄️</span>Déneigement</div>
+                    <div class="design1-div"><span class="design1-div-icon">🚜</span>Location</div>
+                    <div class="design1-div"><span class="design1-div-icon">🔩</span>Pieux Vistech</div>
+                </div>
+            </div>
+            <div class="design-desc">
+                <strong>Style « Frosted Industrial » :</strong> Ambiance de chantier au coucher du soleil (golden hour). Un panneau de verre dépoli (frosted glass) flotte au centre avec le texte principal. Typographie massive en sans-serif, bouton d'appel à l'action orange avec ombres internes, et tags flottants en verre affichant les certifications. Le filigrane « SB » en gris très léger apparaît derrière le contenu. Les quatre divisions sont alignées en bas dans des cases semi-transparentes. Look professionnel et moderne avec une touche industrielle authentique.
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         DESIGN 2: LIQUID GLASS & CHROME
+         ═══════════════════════════════════════════════════════ -->
+    <div class="design-section">
+        <div class="design-title">
+            <span>Design 2 : « Liquid Glass & Chrome »</span>
+            <span class="design-tag">MÉTALLIQUE + LIQUIDE</span>
+        </div>
+        <div class="design-content">
+            <div class="design2-hero design2">
+                <div class="design2-ambient"></div>
+                <div class="design2-liquid"></div>
+                <div class="design2-main">
+                    <h1>Groupe SB</h1>
+                    <p class="tagline">Service rapide et efficace — Chibougamau et région</p>
+                    <div class="services-list">
+                        <span class="service-tag">Construction</span>
+                        <span class="service-tag">Déneigement</span>
+                        <span class="service-tag">Location d'équipement</span>
+                        <span class="service-tag">Pieux Vistech</span>
+                    </div>
+                    <div class="cta-row">
+                        <a href="#contact" class="cta-primary">Soumission gratuite</a>
+                        <a href="#services" class="cta-secondary">Voir nos services →</a>
+                    </div>
+                </div>
+                <div class="design2-nav">
+                    <a href="#" class="active">Accueil</a>
+                    <a href="#">Services</a>
+                    <a href="#">Réalisations</a>
+                    <a href="#">À propos</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+            <div class="design-desc">
+                <strong>Style « Liquid Glass & Chrome » :</strong> Fond charcoal-noir profond avec un élément « liquide glass » animé qui ondule lentement, éclairé de reflets orange et acier. Typographie en dégradé aluminium brossé avec une animation de brillance subtile. Boutons capsule en verre avec reflets spéculaires. Barre de navigation flottante (floating dock) au bas de la section. Police Space Grotesk pour les sous-titres. Look luxueux, inspiré de l'automobile haut de gamme et de la machinerie lourde.
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         DESIGN 3: MODERN INDUSTRIAL DARK
+         ═══════════════════════════════════════════════════════ -->
+    <div class="design-section" style="margin-bottom: 60px;">
+        <div class="design-title">
+            <span>Design 3 : « Industrial Dark »</span>
+            <span class="design-tag">MINIMALISME INDUSTRIEL + MODE SOMBRE</span>
+        </div>
+        <div class="design-content">
+            <div class="design3-hero design3">
+                <!-- Nav -->
+                <nav class="design3-nav">
+                    <img src="image/Constructions SB logo.png" alt="Groupe SB" class="design3-nav-logo">
+                    <a href="#" class="d3-active">Accueil</a>
+                    <a href="#">Services</a>
+                    <a href="#">Réalisations</a>
+                    <a href="#">À propos</a>
+                    <a href="#">Contact</a>
+                </nav>
+
+                <!-- Orange geometric bar -->
+                <div class="design3-bar"></div>
+                <div class="design3-bar-thin"></div>
+
+                <!-- Left: text content -->
+                <div class="design3-left">
+                    <h1>Bâtir,<br>Innover,<br><span class="d3-orange">Exceller.</span></h1>
+                    <p class="d3-subtitle">Service rapide et efficace pour tous vos projets de construction, déneigement et plus. Votre partenaire de confiance au Nord-du-Québec.</p>
+                    <div class="d3-cta-row">
+                        <a href="#contact" class="d3-cta">
+                            En savoir plus <span class="d3-cta-arrow">→</span>
+                        </a>
+                    </div>
+                    <div class="design3-services-row">
+                        <div class="design3-svc">
+                            <div class="design3-svc-icon">⬡</div>
+                            <span class="design3-svc-label">Construction</span>
+                        </div>
+                        <div class="design3-svc">
+                            <div class="design3-svc-icon">❄</div>
+                            <span class="design3-svc-label">Déneigement</span>
+                        </div>
+                        <div class="design3-svc">
+                            <div class="design3-svc-icon">⚙</div>
+                            <span class="design3-svc-label">Location</span>
+                        </div>
+                        <div class="design3-svc">
+                            <div class="design3-svc-icon">⏚</div>
+                            <span class="design3-svc-label">Pieux</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: machinery placeholder -->
+                <div class="design3-right">
+                    <div class="design3-machine">
+                        <div class="design3-machine-inner">
+                            <div class="d3-machine-icon">🏗️</div>
+                            Image machinerie<br>( cutout )
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats bar at bottom -->
+                <div class="design3-stats">
+                    <div class="design3-stat">
+                        <div class="design3-stat-number">500<span class="d3-dot">+</span></div>
+                        <div class="design3-stat-divider"></div>
+                        <div class="design3-stat-label">Projets complétés</div>
+                    </div>
+                    <div class="design3-stat">
+                        <div class="design3-stat-number">4<span class="d3-dot">.</span></div>
+                        <div class="design3-stat-divider"></div>
+                        <div class="design3-stat-label">Divisions</div>
+                    </div>
+                    <div class="design3-stat">
+                        <div class="design3-stat-number">20<span class="d3-dot">+</span></div>
+                        <div class="design3-stat-divider"></div>
+                        <div class="design3-stat-label">Ans d'expérience</div>
+                    </div>
+                    <div class="design3-stat">
+                        <div class="design3-stat-number">100<span class="d3-dot">%</span></div>
+                        <div class="design3-stat-divider"></div>
+                        <div class="design3-stat-label">Satisfaction client</div>
+                    </div>
+                </div>
+            </div>
+            <div class="design-desc">
+                <strong>Style « Industrial Dark » :</strong> Minimalisme industriel haut de gamme en mode sombre. Fond noir charbon avec une texture de grain subtile rappelant le sol et la roche. Une barre verticale orange (safety orange) sert d'ancrage géométrique fort, rappelant les zones de chantier. Typographie massive et audacieuse en blanc pur (style « Swiss grid »). Une zone de découpe pour une image de machinerie lourde (hero cutout) qui semble flotter devant la barre orange. Icônes de services en trait fin (high-tech). Compteurs de statistiques en bas pour afficher crédibilité et envergure. Le look mélange la robustesse du chantier avec la sophistication d'une firme tech. Vibe : « Machinerie lourde rencontre Silicon Valley. »
+            </div>
+        </div>
+    </div>
+</body>
+</html>

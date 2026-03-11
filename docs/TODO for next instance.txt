@@ -1,0 +1,73 @@
+INSTRUCTIONS FOR THE NEXT CLAUDE INSTANCE
+==========================================
+Written by the previous instance — 2026-03-10
+
+Hey future me. Dylan is going to ask you to do two things. Read this fully before starting.
+
+
+TASK 1: PUBLISH THE 2 HTML FILES TO GITHUB PAGES
+-------------------------------------------------
+You need to make these two files publicly accessible via live URLs:
+  - structure.html (website skeleton — blueprint style, client reviews the page layout)
+  - designs.html (3 design options — client picks one)
+
+Steps:
+1. Initialize a git repo in this folder: C:\Users\Dylan\Desktop\SB site
+2. Ask Dylan for his GitHub username if you don't have access to `gh auth status`
+3. Create a public GitHub repo (suggest name: "groupe-sb" or "sb-site-preview")
+4. Push the full project folder
+5. Enable GitHub Pages (from main branch, root /)
+6. The live links will be:
+     https://<username>.github.io/<repo-name>/structure.html
+     https://<username>.github.io/<repo-name>/designs.html
+7. Test both links to make sure they load
+
+Important files that must be included in the push:
+  - structure.html
+  - designs.html
+  - image/Constructions SB logo.png  (Design 1 and 3 reference this image)
+  - All docs/ files (for project continuity)
+
+Do NOT push any sensitive files. There are none currently, but check anyway.
+
+
+TASK 2: WRITE THE CLIENT EMAIL
+-------------------------------
+After the links are live, write a text file (in this folder) with an email Dylan can send to his client.
+
+Details for the email:
+  - Client's name: Yverick
+  - Language: French (the client is francophone, Chibougamau Quebec)
+  - Tone: Professional but warm, not overly formal. Dylan's company is "FortX Web"
+  - The email should:
+      1. Greet Yverick
+      2. Present the two links:
+         - Link 1: Structure du site (explain he should click through all pages via the nav to review the layout)
+         - Link 2: Choix de design (explain there are 3 design options, he should pick the one he prefers)
+      3. Ask him to reply with:
+         - Any feedback on the structure (pages to add/remove, sections to change)
+         - His design choice (Design 1, 2, or 3)
+      4. Mention that once he approves both, the team will build the final site
+      5. Sign off as Dylan / FortX Web
+  - Save it as: "Email pour Yverick.txt" in the project root
+
+
+PROJECT STATE SUMMARY (so you don't have to re-read everything)
+---------------------------------------------------------------
+- Client: Groupe SB (Chibougamau, QC) — construction company group
+- 4 divisions: Construction SB, Déneigement SB, Location Expert, Pieux Vistech
+- Brand colors: #ef6006 (orange), #d7cece (silver), #090909 (dark)
+- Logo: image/Constructions SB logo.png
+
+- structure.html (v2.0): Blueprint-style skeleton. Pages: Accueil, À propos, 4 division pages, Contact. "Services" page was removed (redundant). Footer is global. Each division page is fully fleshed out with services, galleries, CTAs.
+
+- designs.html: 3 hero section previews.
+    Design 1: "Frosted Industrial" — glassmorphism, golden hour, frosted glass card
+    Design 2: "Liquid Glass & Chrome" — dark with animated liquid blob, chrome text
+    Design 3: "Industrial Dark" — THIS WAS REDONE. Dark mode minimalism with bold orange vertical bar, Swiss-grid typography, stats counters, machinery cutout zone. Based on a reference image Dylan provided in "design 3/" folder.
+    Selection form was REMOVED (client will reply by email).
+
+- Roadmap: Steps 1-3 done. Step 4 (build final site) is next after client approval.
+- There's also a "Process Review.md" in the root with tips for Dylan's workflow.
+
+That's everything. Good luck.
