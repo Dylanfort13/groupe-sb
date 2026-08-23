@@ -36,7 +36,7 @@ export default function TransportPage() {
     <>
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <Image src={`${basePath}/deneigement-sb.jpg`} alt="" fill sizes="100vw" className="object-cover grayscale" priority />
+          <Image src={`${basePath}/transport-sb.jpg`} alt="" fill sizes="100vw" className="object-cover grayscale" priority />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black-1/96 via-black-1/50 to-black-1/25" />
         <div className="absolute inset-0 bg-transport/12" />

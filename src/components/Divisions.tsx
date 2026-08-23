@@ -79,7 +79,7 @@ const divisions = [
       "Livraison d'agrégats et matériaux",
     ],
     phone: "418-770-4657",
-    image: "/deneigement-sb.jpg",
+    image: "/transport-sb.jpg",
     accent: "transport",
   },
   {
@@ -94,7 +94,7 @@ const divisions = [
       "Entretien et réparation d'équipements",
     ],
     phone: "418-668-8022",
-    image: "/construction-sb.jpg",
+    image: "/cafe-sb.jpg",
     accent: "cafe",
   },
 ];
