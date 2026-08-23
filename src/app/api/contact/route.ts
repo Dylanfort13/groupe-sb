@@ -1,25 +1,23 @@
 import { NextResponse } from "next/server";
+import { inboxFor } from "@/lib/inquiryRouting";
 
-const divisionEmails: Record<string, string> = {
-  construction: "constructions-sb@hotmail.com",
-  deneigement: "deneigementsb@hotmail.com",
-  location: "locationexpert@hotmail.com",
-  pieux: "chibougamau@pieuxvistech.com",
-  transport: "transport_sb@hotmail.com",
-  cafe: "constructions-sb@hotmail.com",
-  general: "constructions-sb@hotmail.com",
-};
+// The sender domain must be verified in Resend or the send is rejected.
+// fortx.site is verified; groupe-sb.ca is not owned yet. When the client's
+// domain is bought and verified, set RESEND_FROM_EMAIL and nothing else changes.
+const DEFAULT_FROM = "Groupe SB <message@fortx.site>";
 
 export async function POST(req: Request) {
   const body = await req.json();
   const { firstName, lastName, email, phone, division, message } = body;
 
-  const toEmail = divisionEmails[division] ?? divisionEmails.general;
+  const toEmail = inboxFor(division);
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
-    console.warn("RESEND_API_KEY not configured — skipping email send");
-    return NextResponse.json({ ok: true });
+    // Previously returned ok:true here, which made a broken configuration look
+    // like a delivered message to both the visitor and the client.
+    console.error("RESEND_API_KEY not configured — cannot send inquiry");
+    return NextResponse.json({ ok: false }, { status: 500 });
   }
 
   const res = await fetch("https://api.resend.com/emails", {
@@ -29,7 +27,7 @@ export async function POST(req: Request) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "Groupe SB <noreply@groupe-sb.ca>",
+      from: process.env.RESEND_FROM_EMAIL || DEFAULT_FROM,
       to: [toEmail],
       reply_to: email,
       subject: `Nouveau message — ${division} — ${firstName} ${lastName}`,
