@@ -1,6 +1,7 @@
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
+const sharp = require('sharp');
 
 const API_KEY = process.env.GEMINI_API_KEY;
 if (!API_KEY) {
@@ -285,7 +286,13 @@ async function main() {
         continue;
       }
 
-      const buf = Buffer.from(imgPart.inlineData.data, 'base64');
+      // Gemini returns PNG. Writing those bytes straight to a .jpg produced 81
+      // mislabelled ~1.8MB files and 9MB page loads, so encode to real JPEG here.
+      const raw = Buffer.from(imgPart.inlineData.data, 'base64');
+      const buf = await sharp(raw)
+        .flatten({ background: { r: 0x09, g: 0x09, b: 0x09 } })
+        .jpeg({ quality: 82, progressive: true, mozjpeg: true })
+        .toBuffer();
       fs.writeFileSync(outPath, buf);
       console.log(`OK (${(buf.length / 1024).toFixed(0)}KB)`);
       done++;
