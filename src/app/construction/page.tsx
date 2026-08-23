@@ -2,31 +2,30 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import RevealOnScroll from "@/components/RevealOnScroll";
+import basePath from "@/basePath";
 
 export const metadata: Metadata = {
   title: "Construction SB — Groupe SB",
   description:
-    "Construction résidentielle et commerciale, spécialité béton. Excavation, fondation, paysagement et isolation à Chibougamau.",
+    "Construction résidentielle et commerciale, spécialité béton. Excavation, fondation et isolation à Chibougamau.",
 };
 
 const services = [
   {
     title: "CONSTRUCTION",
+    slug: "construction",
     items: ["Construction résidentielle", "Construction commerciale", "Spécialité béton"],
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9,22 9,12 15,12 15,22" /></svg>,
   },
   {
     title: "EXCAVATION & FONDATIONS",
+    slug: "excavation-fondations",
     items: ["Excavation générale", "Drain de fondation", "Réparation de fondation", "Membrane pulvérisée de fondation"],
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5" aria-hidden="true"><path d="M2 22l10-10M2 12l5-5 5 5-5 5z" /><path d="M22 2l-8 8" /></svg>,
   },
   {
-    title: "AMÉNAGEMENT",
-    items: ["Paysagement", "Installation clôture à maille", "Nettoyage de pavé (balais mécanique commercial)"],
-    icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5" aria-hidden="true"><circle cx="12" cy="12" r="3" /><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" /></svg>,
-  },
-  {
     title: "ISOLATION",
+    slug: "isolation",
     items: ["Isolation uréthane pulvérisé", "Laine soufflée à la cellulose"],
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>,
   },
@@ -37,7 +36,7 @@ export default function ConstructionPage() {
     <>
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/construction-sb.jpg" alt="" fill sizes="100vw" className="object-cover grayscale" priority />
+          <Image src={`${basePath}/construction-sb.jpg`} alt="" fill sizes="100vw" className="object-cover grayscale" priority />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black-1/96 via-black-1/50 to-black-1/25" />
         <div className="absolute inset-0 bg-construction/12" />
@@ -68,24 +67,65 @@ export default function ConstructionPage() {
               <p className="text-silver text-base leading-relaxed max-w-[420px]">Résidentiel, commercial et spécialité béton, de l&apos;excavation à la finition.</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {services.map((svc, i) => (
                 <RevealOnScroll key={svc.title} delay={i * 100} className="h-full">
-                  <div className="bg-charcoal/22 border border-charcoal/55 rounded-sm p-8 transition-all duration-200 hover:border-construction/38 hover:-translate-y-0.5 h-full">
-                    <div className="font-display text-xl tracking-[0.04em] text-white mb-4 pb-3 border-b border-construction/25 flex items-center gap-2.5">
-                      <span className="text-construction">{svc.icon}</span>
-                      {svc.title}
+                  <div className="group relative bg-charcoal rounded-sm overflow-hidden transition-all duration-700 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.55)] flex flex-col h-full">
+                    <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url('${basePath}/texture-metal.jpg')` }} />
+                    <div className="absolute inset-0 bg-black" style={{ opacity: 0.9 }} />
+                    <span className="absolute bottom-0 left-0 w-full sm:w-0 h-[3px] bg-construction transition-all duration-700 sm:group-hover:w-full z-[3]" />
+                    <div className="relative z-[2] p-8 flex flex-col h-full">
+                      <div className="font-display text-xl tracking-[0.04em] text-white mb-4 pb-3 border-b border-construction/25 flex items-center gap-2.5">
+                        <span className="text-construction">{svc.icon}</span>
+                        {svc.title}
+                      </div>
+                      <ul className="space-y-2 flex-1">
+                        {svc.items.map((item) => (
+                          <li key={item} className="text-sm text-silver flex items-center gap-2">
+                            <span className="w-1 h-1 rounded-full bg-construction flex-shrink-0" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-6 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                        <Link
+                          href={`/construction/${svc.slug}`}
+                          className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.1em] uppercase text-construction border border-construction/40 hover:border-construction hover:bg-construction/10 px-4 py-2 rounded-sm transition-all duration-200"
+                        >
+                          En savoir plus
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                        </Link>
+                      </div>
                     </div>
-                    <ul className="space-y-2">
-                      {svc.items.map((item) => (
-                        <li key={item} className="text-sm text-silver flex items-center gap-2">
-                          <span className="w-1 h-1 rounded-full bg-construction flex-shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
                   </div>
                 </RevealOnScroll>
+              ))}
+            </div>
+          </div>
+        </section>
+      </RevealOnScroll>
+
+      <RevealOnScroll>
+        <section className="bg-black-2 py-24 px-[5%]">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-between items-end gap-8 flex-wrap mb-12">
+              <div>
+                <div className="inline-flex items-center gap-2.5 text-construction text-xs font-bold tracking-[0.22em] uppercase mb-4">
+                  Nos travaux
+                </div>
+                <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient">RÉALISATIONS</h2>
+              </div>
+              <Link href="/realisations" className="text-xs font-bold tracking-[0.1em] uppercase text-construction hover:text-white transition-colors">
+                Voir tout →
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <div
+                  key={i}
+                  className="aspect-[4/3] rounded-sm"
+                  style={{ background: `linear-gradient(135deg, #c46520${i % 2 === 0 ? "33" : "1a"}, #090909)` }}
+                />
               ))}
             </div>
           </div>
@@ -112,13 +152,6 @@ export default function ConstructionPage() {
               >
                 Soumission gratuite
               </Link>
-              <a
-                href="tel:4187707506"
-                className="inline-flex items-center gap-2 bg-transparent text-light-text text-sm font-bold tracking-[0.12em] uppercase px-10 py-4 rounded-sm border-2 border-charcoal/40 hover:border-construction hover:text-construction transition-all duration-200 touch-manipulation"
-              >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 016.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 015.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.13a16 16 0 006 6l1.5-1.52a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0120 14.92z" /></svg>
-                418-770-7506
-              </a>
             </div>
           </div>
         </section>

@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import basePath from "@/basePath";
 
 export function Hero() {
   return (
     <section className="relative min-h-dvh flex items-center overflow-hidden">
       <div className="absolute inset-0 hero-fade-in">
         <Image
-          src="/construction-sb.jpg"
+          src={`${basePath}/construction-sb.jpg`}
           alt=""
           fill
           sizes="100vw"
@@ -51,7 +52,7 @@ export function Hero() {
 
         <div className="hidden lg:flex flex-1 justify-center items-center hero-slide-up" style={{ animationDelay: "0.4s" }}>
           <Image
-            src="/logo.png"
+            src={`${basePath}/logo.png`}
             alt="Groupe SB"
             width={380}
             height={290}

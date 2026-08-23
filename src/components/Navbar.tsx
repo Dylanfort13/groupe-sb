@@ -3,12 +3,15 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import basePath from "@/basePath";
 
 const subLinks = [
   { href: "/construction", label: "Construction SB", accent: "text-construction" },
   { href: "/deneigement", label: "Déneigement SB", accent: "text-deneigement" },
   { href: "/location", label: "Location Expert", accent: "text-location" },
   { href: "/pieux-vistech", label: "Pieux Vistech", accent: "text-pieux" },
+  { href: "/transport", label: "Transport SB", accent: "text-transport" },
+  { href: "/cafe", label: "Café Marc Robitaille", accent: "text-cafe" },
 ];
 
 export default function Navbar() {
@@ -32,7 +35,7 @@ export default function Navbar() {
     >
       <Link href="/" className="flex items-center">
         <Image
-          src="/logo.png"
+          src={`${basePath}/logo.png`}
           alt="Groupe SB"
           width={58}
           height={44}
@@ -78,13 +81,13 @@ export default function Navbar() {
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className={`transition-transform duration-200 ${subOpen ? "rotate-180" : ""}`} aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
           </button>
           <div className={`absolute top-full left-0 pt-2 transition-all duration-200 ${subOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
-            <div className="bg-black-1/95 backdrop-blur-xl border border-charcoal/50 rounded-sm py-2 min-w-[220px]">
+            <div className="bg-black-1/95 backdrop-blur-xl border border-charcoal/50 rounded-sm py-2 min-w-[240px]">
               {subLinks.map((sub) => (
                 <Link
                   key={sub.href}
                   href={sub.href}
                   onClick={() => { setOpen(false); setSubOpen(false); }}
-                  className={`block px-5 py-2.5 text-xs font-semibold tracking-[0.1em] uppercase text-silver/70 hover:text-white hover:bg-charcoal/30 transition-colors duration-150 ${sub.accent}`}
+                  className="block px-5 py-2.5 text-xs font-semibold tracking-[0.1em] uppercase text-silver/70 hover:text-white hover:bg-charcoal/30 transition-colors duration-150"
                 >
                   {sub.label}
                 </Link>

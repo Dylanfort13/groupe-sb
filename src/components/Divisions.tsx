@@ -4,6 +4,7 @@ import { useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import RevealOnScroll from "./RevealOnScroll";
+import basePath from "@/basePath";
 
 const divisions = [
   {
@@ -45,7 +46,7 @@ const divisions = [
       "Outils de chantier et construction",
       "Machinerie lourde et compaction",
       "Génératrices et éclairage",
-      "Paysagement et jardinage",
+      "Location de chapiteaux",
     ],
     phone: "418-770-8243",
     image: "/location-expert.jpg",
@@ -66,6 +67,36 @@ const divisions = [
     image: "/pieux-vistech.jpg",
     accent: "pieux",
   },
+  {
+    name: "Transport SB",
+    href: "/transport",
+    tag: "Division 05",
+    description: "Transport de machinerie lourde, déplacement d'équipements et livraison de matériaux.",
+    services: [
+      "Camions lourds (10 et 12 roues)",
+      "Déplacement de machinerie",
+      "Transport de nacelle et équipements",
+      "Livraison d'agrégats et matériaux",
+    ],
+    phone: "418-770-4657",
+    image: "/deneigement-sb.jpg",
+    accent: "transport",
+  },
+  {
+    name: "Café Marc Robitaille",
+    href: "/cafe",
+    tag: "Division 06",
+    description: "Distributeur de café et slush — machines commerciales, entretien et fournitures.",
+    services: [
+      "Café premium (diverses torréfactions)",
+      "Produits Slush Puppie",
+      "Machines commerciales à café et slush",
+      "Entretien et réparation d'équipements",
+    ],
+    phone: "418-668-8022",
+    image: "/construction-sb.jpg",
+    accent: "cafe",
+  },
 ];
 
 const accentMap: Record<string, { bar: string; bullet: string; numColor: string; tagBorder: string; linkHover: string; overlayHover: string }> = {
@@ -73,6 +104,8 @@ const accentMap: Record<string, { bar: string; bullet: string; numColor: string;
   deneigement: { bar: "bg-deneigement", bullet: "bg-deneigement", numColor: "text-deneigement/25", tagBorder: "border-deneigement/50", linkHover: "group-hover:text-deneigement", overlayHover: "group-hover:bg-black-1/92" },
   location: { bar: "bg-location", bullet: "bg-location", numColor: "text-location/25", tagBorder: "border-location/50", linkHover: "group-hover:text-location", overlayHover: "group-hover:bg-black-1/92" },
   pieux: { bar: "bg-pieux", bullet: "bg-pieux", numColor: "text-pieux/25", tagBorder: "border-pieux/50", linkHover: "group-hover:text-pieux", overlayHover: "group-hover:bg-black-1/92" },
+  transport: { bar: "bg-transport", bullet: "bg-transport", numColor: "text-transport/25", tagBorder: "border-transport/50", linkHover: "group-hover:text-transport", overlayHover: "group-hover:bg-black-1/92" },
+  cafe: { bar: "bg-cafe", bullet: "bg-cafe", numColor: "text-cafe/25", tagBorder: "border-cafe/50", linkHover: "group-hover:text-cafe", overlayHover: "group-hover:bg-black-1/92" },
 };
 
 export function Divisions() {
@@ -100,19 +133,19 @@ export function Divisions() {
             NOS<br />DIVISIONS
           </h2>
           <p className="text-silver text-base leading-relaxed max-w-[520px] mt-4">
-            Quatre divisions complémentaires pour répondre à tous vos besoins en construction, déneigement, location d&apos;équipements et fondations.
+            Six divisions complémentaires pour répondre à tous vos besoins en construction, déneigement, location, transport, pieux vissés et café.
           </p>
         </div>
 
         <div
           ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-start gap-16 sm:gap-4 mt-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-start gap-16 sm:gap-4 mt-12"
           style={gridMinHeight ? { minHeight: `${gridMinHeight}px` } : undefined}
         >
           {divisions.map((div, i) => {
             const accent = accentMap[div.accent];
             return (
-              <RevealOnScroll key={div.name} className="sm:col-span-1" delay={i * 120}>
+              <RevealOnScroll key={div.name} className="sm:col-span-1" delay={i * 100}>
               <Link
                 href={div.href}
                 onMouseEnter={() => setTimeout(lockGridHeight, 450)}
@@ -120,10 +153,10 @@ export function Divisions() {
               >
                 <div className="absolute inset-0 z-0">
                   <Image
-                    src={div.image}
+                    src={`${basePath}${div.image}`}
                     alt=""
                     fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover grayscale opacity-100 transition-opacity duration-500"
                   />
                 </div>

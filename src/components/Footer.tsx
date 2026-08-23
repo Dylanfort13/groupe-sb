@@ -20,30 +20,10 @@ export default function Footer() {
             Navigation
           </h4>
           <ul className="flex flex-col gap-2.5">
-            <li>
-              <Link
-                href="/"
-                className="text-sm text-silver/55 hover:text-orange transition-colors"
-              >
-                Accueil
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/a-propos"
-                className="text-sm text-silver/55 hover:text-orange transition-colors"
-              >
-                À propos
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/contact"
-                className="text-sm text-silver/55 hover:text-orange transition-colors"
-              >
-                Contact
-              </Link>
-            </li>
+            <li><Link href="/" className="text-sm text-silver/55 hover:text-orange transition-colors">Accueil</Link></li>
+            <li><Link href="/a-propos" className="text-sm text-silver/55 hover:text-orange transition-colors">À propos</Link></li>
+            <li><Link href="/realisations" className="text-sm text-silver/55 hover:text-orange transition-colors">Réalisations</Link></li>
+            <li><Link href="/contact" className="text-sm text-silver/55 hover:text-orange transition-colors">Contact</Link></li>
           </ul>
         </div>
 
@@ -52,38 +32,12 @@ export default function Footer() {
             Nos Divisions
           </h4>
           <ul className="flex flex-col gap-2.5">
-            <li>
-              <Link
-                href="/construction"
-                className="text-sm text-silver/55 hover:text-orange transition-colors"
-              >
-                Construction SB
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/deneigement"
-                className="text-sm text-silver/55 hover:text-orange transition-colors"
-              >
-                Déneigement SB
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/location"
-                className="text-sm text-silver/55 hover:text-orange transition-colors"
-              >
-                Location Expert
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/pieux-vistech"
-                className="text-sm text-silver/55 hover:text-orange transition-colors"
-              >
-                Pieux Vistech
-              </Link>
-            </li>
+            <li><Link href="/construction" className="text-sm text-silver/55 hover:text-orange transition-colors">Construction SB</Link></li>
+            <li><Link href="/deneigement" className="text-sm text-silver/55 hover:text-orange transition-colors">Déneigement SB</Link></li>
+            <li><Link href="/location" className="text-sm text-silver/55 hover:text-orange transition-colors">Location Expert</Link></li>
+            <li><Link href="/pieux-vistech" className="text-sm text-silver/55 hover:text-orange transition-colors">Pieux Vistech</Link></li>
+            <li><Link href="/transport" className="text-sm text-silver/55 hover:text-orange transition-colors">Transport SB</Link></li>
+            <li><Link href="/cafe" className="text-sm text-silver/55 hover:text-orange transition-colors">Café Marc Robitaille</Link></li>
           </ul>
         </div>
 
@@ -93,81 +47,36 @@ export default function Footer() {
           </h4>
           <div className="flex flex-col gap-3 text-sm">
             <div>
-              <span className="text-orange font-semibold">Construction SB</span>
-              <br />
-              <a
-                href="tel:4187707506"
-                className="text-silver/55 hover:text-orange transition-colors"
-              >
-                418-770-7506
-              </a>
-              <br />
-              <a
-                href="mailto:constructions-sb@hotmail.com"
-                className="text-silver/55 hover:text-orange transition-colors text-xs"
-              >
-                constructions-sb@hotmail.com
-              </a>
+              <span className="text-construction font-semibold">Construction SB</span><br />
+              <a href="tel:4187707506" className="text-silver/55 hover:text-orange transition-colors">418-770-7506</a><br />
+              <a href="mailto:constructions-sb@hotmail.com" className="text-silver/55 hover:text-orange transition-colors text-xs">constructions-sb@hotmail.com</a>
             </div>
             <div>
-              <span className="text-orange font-semibold">Déneigement SB</span>
-              <br />
-              <a
-                href="tel:4187704657"
-                className="text-silver/55 hover:text-orange transition-colors"
-              >
-                418-770-4657
-              </a>{" "}
-              /{" "}
-              <a
-                href="tel:4187703726"
-                className="text-silver/55 hover:text-orange transition-colors"
-              >
-                418-770-3726
-              </a>
-              <br />
-              <a
-                href="mailto:deneigementsb@hotmail.com"
-                className="text-silver/55 hover:text-orange transition-colors text-xs"
-              >
-                deneigementsb@hotmail.com
-              </a>
+              <span className="text-deneigement font-semibold">Déneigement SB</span><br />
+              <a href="tel:4187704657" className="text-silver/55 hover:text-orange transition-colors">418-770-4657</a>{" "}/{" "}
+              <a href="tel:4187703726" className="text-silver/55 hover:text-orange transition-colors">418-770-3726</a><br />
+              <a href="mailto:deneigementsb@hotmail.com" className="text-silver/55 hover:text-orange transition-colors text-xs">deneigementsb@hotmail.com</a>
             </div>
             <div>
-              <span className="text-orange font-semibold">Location Expert</span>
-              <br />
-              <a
-                href="tel:4187708243"
-                className="text-silver/55 hover:text-orange transition-colors"
-              >
-                418-770-8243
-              </a>
-              <br />
-              <a
-                href="mailto:locationexpert@hotmail.com"
-                className="text-silver/55 hover:text-orange transition-colors text-xs"
-              >
-                locationexpert@hotmail.com
-              </a>
+              <span className="text-location font-semibold">Location Expert</span><br />
+              <a href="tel:4187708243" className="text-silver/55 hover:text-orange transition-colors">418-770-8243</a><br />
+              <a href="mailto:locationexpert@hotmail.com" className="text-silver/55 hover:text-orange transition-colors text-xs">locationexpert@hotmail.com</a>
             </div>
             <div>
-              <span className="text-orange font-semibold">
-                Pieux Vistech Chibougamau
-              </span>
-              <br />
-              <a
-                href="tel:4187704657"
-                className="text-silver/55 hover:text-orange transition-colors"
-              >
-                418-770-4657
-              </a>
-              <br />
-              <a
-                href="mailto:chibougamau@pieuxvistech.com"
-                className="text-silver/55 hover:text-orange transition-colors text-xs"
-              >
-                chibougamau@pieuxvistech.com
-              </a>
+              <span className="text-pieux font-semibold">Pieux Vistech</span><br />
+              <a href="tel:4187704657" className="text-silver/55 hover:text-orange transition-colors">418-770-4657</a><br />
+              <a href="mailto:chibougamau@pieuxvistech.com" className="text-silver/55 hover:text-orange transition-colors text-xs">chibougamau@pieuxvistech.com</a>
+            </div>
+            <div>
+              <span className="text-transport font-semibold">Transport SB</span><br />
+              <a href="tel:4187704657" className="text-silver/55 hover:text-orange transition-colors">418-770-4657</a>{" "}/{" "}
+              <a href="tel:4187703726" className="text-silver/55 hover:text-orange transition-colors">418-770-3726</a><br />
+              <a href="mailto:transport_sb@hotmail.com" className="text-silver/55 hover:text-orange transition-colors text-xs">transport_sb@hotmail.com</a>
+            </div>
+            <div>
+              <span className="text-cafe font-semibold">Café Marc Robitaille</span><br />
+              <a href="tel:4186688022" className="text-silver/55 hover:text-orange transition-colors">418-668-8022</a><br />
+              <a href="tel:18004639905" className="text-silver/55 hover:text-orange transition-colors">1-800-463-9905</a>
             </div>
           </div>
         </div>

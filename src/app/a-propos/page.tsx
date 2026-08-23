@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import RevealOnScroll from "@/components/RevealOnScroll";
+import basePath from "@/basePath";
 
 export const metadata: Metadata = {
   title: "À propos — Groupe SB",
@@ -32,7 +33,7 @@ export default function AboutPage() {
     <>
       <section className="relative py-32 px-[5%] overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/hero-construction.jpg" alt="" fill sizes="100vw" className="object-cover grayscale" />
+          <Image src={`${basePath}/hero-construction.jpg`} alt="" fill sizes="100vw" className="object-cover grayscale" />
         </div>
         <div className="absolute inset-0 bg-black-1/88" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#090909_100%)]" />
@@ -52,7 +53,7 @@ export default function AboutPage() {
             <RevealOnScroll type="left">
               <div className="relative rounded-sm overflow-hidden">
                 <Image
-                  src="/trailer.png"
+                  src={`${basePath}/trailer.png`}
                   alt="Équipement Groupe SB"
                   width={800}
                   height={600}
@@ -70,11 +71,11 @@ export default function AboutPage() {
                   <span className="text-orange">L&apos;EXPÉRIENCE</span>
                 </h2>
                 <p className="text-silver leading-relaxed mb-6">
-                  Groupe SB est une entreprise établie à Chibougamau, au cœur du Nord-du-Québec. Avec quatre divisions complémentaires, nous offrons une gamme complète de services en construction, déneigement, location d&apos;équipements et installation de pieux vissés.
+                  Groupe SB est une entreprise établie à Chibougamau, au cœur du Nord-du-Québec. Avec six divisions complémentaires, nous offrons une gamme complète de services en construction, déneigement, location, transport, pieux vissés et distribution de café.
                 </p>
                 <div className="w-12 h-[2px] bg-orange mb-6" />
                 <p className="text-silver leading-relaxed">
-                  Notre positionnement unique : une seule entreprise, quatre expertises. Résidentiel, commercial et industriel, nous servons Chibougamau, Chapais, Mistissini, Oujé-Bougoumou et l&apos;ensemble du Nord-du-Québec.
+                  Notre positionnement unique : une seule entreprise, six expertises. Résidentiel, commercial et industriel, nous servons Chibougamau, Chapais, Mistissini, Oujé-Bougoumou et l&apos;ensemble du Nord-du-Québec.
                 </p>
               </div>
             </RevealOnScroll>
@@ -113,7 +114,7 @@ export default function AboutPage() {
       <RevealOnScroll>
         <section className="relative py-32 px-[5%] overflow-hidden">
           <div className="absolute inset-0">
-            <Image src="/construction-sb.jpg" alt="" fill sizes="100vw" className="object-cover grayscale" />
+            <Image src={`${basePath}/construction-sb.jpg`} alt="" fill sizes="100vw" className="object-cover grayscale" />
           </div>
           <div className="absolute inset-0 bg-black-1/88" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#090909_100%)]" />
@@ -158,13 +159,6 @@ export default function AboutPage() {
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                 Nous contacter
               </Link>
-              <a
-                href="tel:4187707506"
-                className="inline-flex items-center gap-2 bg-transparent text-light-text text-sm font-bold tracking-[0.12em] uppercase px-10 py-4 rounded-sm border-2 border-charcoal/40 hover:border-orange hover:text-orange transition-all duration-200 touch-manipulation"
-              >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 016.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 015.18 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.13a16 16 0 006 6l1.5-1.52a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0120 14.92z" /></svg>
-                418-770-7506
-              </a>
             </div>
           </div>
         </section>

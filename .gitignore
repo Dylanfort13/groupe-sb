@@ -33,9 +33,16 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# internal planning docs — this repo is PUBLIC on GitHub.
+# The spec describes FortX platform internals and client details.
+# Delete this line if you want them versioned publicly.
+/docs/superpowers/
+
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.vercel

@@ -1,10 +1,11 @@
 import Image from "next/image";
+import basePath from "@/basePath";
 import RevealOnScroll from "./RevealOnScroll";
 
 export function Stats() {
   const stats = [
-    { num: "4", label: "Divisions spécialisées" },
-    { num: "20+", label: "Services offert" },
+    { num: "6", label: "Divisions spécialisées" },
+    { num: "25+", label: "Services offerts" },
     { num: "5", label: "Zones desservies" },
     { num: "1", label: "Appel suffit" },
   ];
@@ -12,7 +13,7 @@ export function Stats() {
   return (
     <section className="relative py-24 px-[5%] overflow-hidden">
       <div className="absolute inset-0">
-        <Image src="/hero-construction.jpg" alt="" fill sizes="100vw" className="object-cover grayscale" />
+        <Image src={`${basePath}/hero-construction.jpg`} alt="" fill sizes="100vw" className="object-cover grayscale" />
       </div>
       <div className="absolute inset-0 bg-black-1/88" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#090909_100%)]" />

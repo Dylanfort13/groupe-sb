@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { ContactForm } from "./ContactForm";
 import RevealOnScroll from "@/components/RevealOnScroll";
+import basePath from "@/basePath";
 
 export const metadata: Metadata = {
   title: "Contact — Groupe SB",
@@ -51,7 +52,7 @@ export default function ContactPage() {
   return (
     <>
       <div className="relative py-32 px-[5%] overflow-hidden">
-        <Image src="/hero-construction.jpg" alt="" fill className="object-cover grayscale" aria-hidden="true" />
+        <Image src={`${basePath}/hero-construction.jpg`} alt="" fill className="object-cover grayscale" aria-hidden="true" />
         <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, rgba(9,9,9,0.75) 0%, rgba(9,9,9,0.95) 100%)" }} aria-hidden="true" />
         <div className="relative max-w-7xl mx-auto text-center">
           <div className="inline-flex items-center gap-2.5 text-orange text-xs font-bold tracking-[0.22em] uppercase mb-6">
