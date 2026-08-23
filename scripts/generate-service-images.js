@@ -11,6 +11,10 @@ const OUT_DIR = path.join(__dirname, '..', 'public', 'services');
 
 const SUFFIX = ', photorealistic, natural color, no HDR, no oversaturation, no text, no watermarks, no logos, no people';
 
+// For service/repair shots where hands are the honest subject. Same rules as
+// SUFFIX minus "no people", because a hands-on maintenance photo needs hands.
+const HANDS_SUFFIX = ', photorealistic, natural color, no HDR, no oversaturation, no text, no watermarks, no logos';
+
 const images = [
   // ── Construction > construction ──────────────────────────────────────────
   { division: 'construction', category: 'construction', i: 0,
@@ -117,6 +121,88 @@ const images = [
     prompt: 'Assorted construction equipment on flatbed trailer, air compressor and small machinery secured with straps, ready for transport' + SUFFIX },
   { division: 'transport', category: 'transport-materiel', i: 2,
     prompt: 'Dump truck tilting bed unloading sand and gravel aggregate at construction site, material cascading down, dust cloud' + SUFFIX },
+
+  // ── Location Expert > outils-chantier ────────────────────────────────────
+  { division: 'location', category: 'outils-chantier', i: 0,
+    prompt: 'Concrete tools lined up in an equipment rental warehouse: portable cement mixer, concrete vibrator, angle grinder, clean organized shelving' + SUFFIX },
+  { division: 'location', category: 'outils-chantier', i: 1,
+    prompt: 'Roofing and framing tools on a workbench: pneumatic nail guns, compound mitre saw, coils of nails, rental shop interior' + SUFFIX },
+  { division: 'location', category: 'outils-chantier', i: 2,
+    prompt: 'Modular steel scaffolding sections and aluminum extension ladders stacked in an outdoor equipment rental yard, Quebec' + SUFFIX },
+  { division: 'location', category: 'outils-chantier', i: 3,
+    prompt: 'Assorted power tools on rental shop shelving: rotary hammers, angle grinders, circular saws, portable air compressor, organized rows' + SUFFIX },
+
+  // ── Location Expert > machinerie-transport ───────────────────────────────
+  { division: 'location', category: 'machinerie-transport', i: 0,
+    prompt: 'Compact excavator and wheel loader parked side by side in an equipment rental yard, gravel ground, overcast Quebec sky' + SUFFIX },
+  { division: 'location', category: 'machinerie-transport', i: 1,
+    prompt: 'Telescopic handler lifting a pallet of building materials at a construction site, forks raised, Quebec' + SUFFIX },
+  { division: 'location', category: 'machinerie-transport', i: 2,
+    prompt: 'Scissor lift and articulated boom lift platforms parked in an equipment rental yard, elevated work platforms, overcast sky' + SUFFIX },
+  { division: 'location', category: 'machinerie-transport', i: 3,
+    prompt: 'Row of utility trailers of different sizes lined up in a rental yard, flatbed and enclosed trailers, Quebec' + SUFFIX },
+
+  // ── Location Expert > equipement-specialise ──────────────────────────────
+  { division: 'location', category: 'equipement-specialise', i: 0,
+    prompt: 'Portable industrial generator beside a towable light tower with mast raised, construction site at dusk, Quebec' + SUFFIX },
+  { division: 'location', category: 'equipement-specialise', i: 1,
+    prompt: 'Submersible water pump with discharge hoses draining a flooded excavation trench, muddy water, construction site' + SUFFIX },
+  { division: 'location', category: 'equipement-specialise', i: 2,
+    prompt: 'Propane construction heater and large ventilation fan inside an unfinished building under winter construction, Quebec' + SUFFIX },
+  { division: 'location', category: 'equipement-specialise', i: 3,
+    prompt: 'Rental shop shelf of specialized equipment: air compressors, gas detectors, safety harnesses and hard hats, organized display' + SUFFIX },
+
+  // ── Location Expert > amenagement ────────────────────────────────────────
+  { division: 'location', category: 'amenagement', i: 0,
+    prompt: 'Commercial lawn mower and string trimmers on a freshly cut green lawn, landscaping equipment, Quebec summer' + SUFFIX },
+  { division: 'location', category: 'amenagement', i: 1,
+    prompt: 'Vibrating plate compactor on a gravel base being prepared for paving, compacted surface texture, construction site' + SUFFIX },
+  { division: 'location', category: 'amenagement', i: 2,
+    prompt: 'Row of two-stage snow blowers lined up in an equipment rental yard before winter season, Quebec' + SUFFIX },
+  { division: 'location', category: 'amenagement', i: 3,
+    prompt: 'Wide interior aisle of a tool and equipment rental warehouse, well-lit organized racks of machinery, Quebec' + SUFFIX },
+
+  // ── Location Expert > location-chapiteau ─────────────────────────────────
+  { division: 'location', category: 'location-chapiteau', i: 0,
+    prompt: 'Small white event marquee tent set up on green grass, compact 10 by 15 foot canopy, summer day, Quebec' + SUFFIX },
+  { division: 'location', category: 'location-chapiteau', i: 1,
+    prompt: 'White event tent with round tables and chairs set up underneath for a family reception, open sides, summer afternoon' + SUFFIX },
+  { division: 'location', category: 'location-chapiteau', i: 2,
+    prompt: 'Large white reception marquee tent on a grass field, long span peaked roof, community event setup, Quebec summer' + SUFFIX },
+  { division: 'location', category: 'location-chapiteau', i: 3,
+    prompt: 'Very large white event marquee covering a wide open field, festival scale tent with multiple peaks, overcast sky' + SUFFIX },
+  { division: 'location', category: 'location-chapiteau', i: 4,
+    prompt: 'Steel tent frame partially erected on grass with white canopy fabric being pulled over, installation in progress, no faces visible' + SUFFIX },
+
+  // ── Cafe Marc Robitaille > cafe-distribution ─────────────────────────────
+  { division: 'cafe', category: 'cafe-distribution', i: 0,
+    prompt: 'Dark roast espresso beans spilling from a scoop beside a freshly pulled espresso in a white cup, rich crema, warm light' + SUFFIX },
+  { division: 'cafe', category: 'cafe-distribution', i: 1,
+    prompt: 'Medium roast coffee beans in a burlap sack beside a light ceramic mug of black coffee on a wooden counter' + SUFFIX },
+  { division: 'cafe', category: 'cafe-distribution', i: 2,
+    prompt: 'Coffee beans arranged beside an unlabeled kraft paper coffee bag on a dark wooden surface, soft natural light' + SUFFIX },
+  { division: 'cafe', category: 'cafe-distribution', i: 3,
+    prompt: 'Stacked unlabeled commercial coffee bags on a delivery pallet in a distribution warehouse, ready for shipping' + SUFFIX },
+
+  // ── Cafe Marc Robitaille > slush-puppie ──────────────────────────────────
+  { division: 'cafe', category: 'slush-puppie', i: 0,
+    prompt: 'Row of brightly coloured frozen drink syrup concentrate bottles on a stainless steel shelf, blue red and green, no labels' + SUFFIX },
+  { division: 'cafe', category: 'slush-puppie', i: 1,
+    prompt: 'Commercial frozen slush drink machine with two transparent barrels of blue and red slush churning, convenience store counter' + SUFFIX },
+  { division: 'cafe', category: 'slush-puppie', i: 2,
+    prompt: 'Technician hands with the front panel of a slush machine removed, servicing internal parts with tools, hands only, no faces' + HANDS_SUFFIX },
+  { division: 'cafe', category: 'slush-puppie', i: 3,
+    prompt: 'Frozen slush drink machine set up at an outdoor summer event booth under a canopy, cups stacked beside it, no faces visible' + HANDS_SUFFIX },
+
+  // ── Cafe Marc Robitaille > service-entretien ─────────────────────────────
+  { division: 'cafe', category: 'service-entretien', i: 0,
+    prompt: 'Commercial espresso machine being installed on a stainless steel counter, water lines connected, hands only, no faces' + HANDS_SUFFIX },
+  { division: 'cafe', category: 'service-entretien', i: 1,
+    prompt: 'Disassembled coffee machine parts, group head and portafilter, laid out on a cloth for cleaning, maintenance detail' + SUFFIX },
+  { division: 'cafe', category: 'service-entretien', i: 2,
+    prompt: 'Open service panel of a commercial beverage machine with hand tools and replacement parts laid out beside it, repair in progress' + SUFFIX },
+  { division: 'cafe', category: 'service-entretien', i: 3,
+    prompt: 'Stack of empty clear plastic cups beside a frozen drink machine at a school fundraising stand, bright cheerful setup, no faces' + HANDS_SUFFIX },
 ];
 
 function callGemini(prompt) {
@@ -165,6 +251,9 @@ async function main() {
 
   for (const img of images) {
     const outPath = path.join(OUT_DIR, img.division, img.category, `${img.i}.jpg`);
+    // writeFileSync does not create parent directories — this is why the
+    // location/ and cafe/ folders never got generated.
+    fs.mkdirSync(path.dirname(outPath), { recursive: true });
 
     if (fs.existsSync(outPath)) {
       console.log(`[SKIP] ${img.division}/${img.category}/${img.i}.jpg — already exists`);
