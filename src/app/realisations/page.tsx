@@ -2,9 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import RevealOnScroll from "@/components/RevealOnScroll";
+import basePath from "@/basePath";
 
-type Category = "tous" | "construction" | "deneigement" | "location" | "pieux";
+type Category =
+  | "tous"
+  | "construction"
+  | "deneigement"
+  | "location"
+  | "pieux"
+  | "transport";
 
 const filters: { label: string; value: Category }[] = [
   { label: "TOUS", value: "tous" },
@@ -12,56 +20,53 @@ const filters: { label: string; value: Category }[] = [
   { label: "DÉNEIGEMENT", value: "deneigement" },
   { label: "LOCATION", value: "location" },
   { label: "PIEUX VISTECH", value: "pieux" },
+  { label: "TRANSPORT", value: "transport" },
 ];
 
+// Stand-in imagery until the client uploads real project photos. The page
+// heading deliberately does not claim these are completed Groupe SB projects.
 const projects = [
   {
     category: "construction" as Category,
     tag: "Construction",
     name: "Résidentiel",
-    gradient: "linear-gradient(135deg, #2c1a0a 0%, #5a3218 40%, #1a1108 100%)",
+    src: "/portfolio/real-residentiel.jpg",
     grid: "lg:col-start-1 lg:col-end-6 lg:row-start-1",
-    isPlaceholder: false,
   },
   {
     category: "deneigement" as Category,
     tag: "Déneigement",
-    name: "Hiver 2024",
-    gradient: "linear-gradient(135deg, #3d2010 0%, #6b3a1a 50%, #1a0f06 100%)",
+    name: "Déneigement commercial",
+    src: "/portfolio/real-deneigement.jpg",
     grid: "lg:col-start-6 lg:col-end-9 lg:row-start-1",
-    isPlaceholder: false,
   },
   {
-    category: "tous" as Category,
-    tag: "Photos à venir",
-    name: "Vos photos ici",
-    gradient: "linear-gradient(135deg, #1a0f06 0%, #ef6006 50%, #1a0f06 100%)",
+    category: "transport" as Category,
+    tag: "Transport",
+    name: "Transport de machinerie",
+    src: "/portfolio/real-transport.jpg",
     grid: "lg:col-start-9 lg:col-end-13 lg:row-start-1",
-    isPlaceholder: true,
   },
   {
     category: "location" as Category,
     tag: "Location",
     name: "Équipements",
-    gradient: "linear-gradient(135deg, #2c1a0a 0%, #4a2810 50%, #0d0804 100%)",
+    src: "/portfolio/real-location.jpg",
     grid: "lg:col-start-1 lg:col-end-5 lg:row-start-2",
-    isPlaceholder: false,
   },
   {
     category: "pieux" as Category,
     tag: "Pieux Vistech",
     name: "Fondations",
-    gradient: "linear-gradient(135deg, #3d2010 0%, #5a3218 50%, #1a1108 100%)",
+    src: "/portfolio/real-pieux.jpg",
     grid: "lg:col-start-5 lg:col-end-9 lg:row-start-2",
-    isPlaceholder: false,
   },
   {
     category: "construction" as Category,
     tag: "Construction",
     name: "Commercial",
-    gradient: "linear-gradient(135deg, #2c1a0a 0%, #4a2810 50%, #0d0804 100%)",
+    src: "/portfolio/real-commercial.jpg",
     grid: "lg:col-start-9 lg:col-end-13 lg:row-start-2",
-    isPlaceholder: false,
   },
 ];
 
@@ -69,9 +74,7 @@ export default function RealisationsPage() {
   const [active, setActive] = useState<Category>("tous");
 
   const visible =
-    active === "tous"
-      ? projects
-      : projects.filter((p) => p.category === active || p.isPlaceholder);
+    active === "tous" ? projects : projects.filter((p) => p.category === active);
 
   return (
     <>
@@ -81,11 +84,11 @@ export default function RealisationsPage() {
             Portfolio
           </div>
           <h1 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient mb-3">
-            NOS RÉALISATIONS
+            NOTRE SAVOIR-FAIRE
           </h1>
           <p className="text-silver text-base leading-relaxed max-w-[520px]">
-            Aperçu de nos projets en construction, déneigement, location et
-            fondations.
+            Un aperçu de nos champs d&apos;expertise en construction,
+            déneigement, location, transport et fondations.
           </p>
         </div>
       </section>
@@ -115,9 +118,12 @@ export default function RealisationsPage() {
                 key={p.name + p.category}
                 className={`group relative overflow-hidden rounded-sm cursor-pointer h-[220px] sm:h-[240px] lg:h-[280px] ${p.grid}`}
               >
-                <div
-                  className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.06]"
-                  style={{ background: p.gradient }}
+                <Image
+                  src={`${basePath}${p.src}`}
+                  alt={p.name}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover grayscale transition-all duration-500 group-hover:scale-[1.06] group-hover:grayscale-0"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                   <div className="text-[0.68rem] font-bold tracking-[0.15em] uppercase text-orange mb-1">
@@ -127,31 +133,6 @@ export default function RealisationsPage() {
                     {p.name}
                   </div>
                 </div>
-                {p.isPlaceholder && (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center px-6">
-                      <svg
-                        className="mx-auto mb-3 opacity-40"
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#ef6006"
-                        strokeWidth="1.5"
-                        aria-hidden="true"
-                      >
-                        <rect x="3" y="3" width="18" height="18" rx="2" />
-                        <circle cx="8.5" cy="8.5" r="1.5" />
-                        <path d="M21 15l-5-5L5 21" />
-                      </svg>
-                      <p className="text-white/30 text-xs font-bold tracking-[0.1em] uppercase">
-                        Photos ajoutées
-                        <br />
-                        une fois reçues
-                      </p>
-                    </div>
-                  </div>
-                )}
               </div>
             ))}
             </div>

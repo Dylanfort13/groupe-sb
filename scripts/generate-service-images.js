@@ -204,6 +204,40 @@ const images = [
     prompt: 'Open service panel of a commercial beverage machine with hand tools and replacement parts laid out beside it, repair in progress' + SUFFIX },
   { division: 'cafe', category: 'service-entretien', i: 3,
     prompt: 'Stack of empty clear plastic cups beside a frozen drink machine at a school fundraising stand, bright cheerful setup, no faces' + HANDS_SUFFIX },
+
+  // ── Portfolio — home grid ────────────────────────────────────────────────
+  { out: 'portfolio/home-residentiel.jpg',
+    prompt: 'Newly completed two-storey wood-frame house exterior in Quebec, fresh siding and finished roof, green lawn, clear day' + SUFFIX },
+  { out: 'portfolio/home-deneigement.jpg',
+    prompt: 'Plow truck clearing a wide commercial parking lot during heavy snowfall at dusk, Quebec winter, headlights cutting through snow' + SUFFIX },
+  { out: 'portfolio/home-location.jpg',
+    prompt: 'Equipment rental yard with excavators, lifts and trailers arranged in rows, wide establishing shot, overcast Quebec sky' + SUFFIX },
+  { out: 'portfolio/home-pieux.jpg',
+    prompt: 'Grid of helical screw piles installed across a cleared building site with mounting plates ready for framing, boreal treeline' + SUFFIX },
+  { out: 'portfolio/home-commercial.jpg',
+    prompt: 'Finished single-storey commercial building exterior with metal cladding and large windows, paved lot, Quebec, overcast' + SUFFIX },
+  { out: 'portfolio/home-transport.jpg',
+    prompt: 'Heavy haul truck with an excavator secured on a lowboy trailer travelling a highway through boreal forest, Quebec' + SUFFIX },
+
+  // ── Portfolio — /realisations grid ───────────────────────────────────────
+  { out: 'portfolio/real-residentiel.jpg',
+    prompt: 'Residential house extension under construction, new wood framing joined to an existing home, scaffolding, Quebec autumn' + SUFFIX },
+  { out: 'portfolio/real-deneigement.jpg',
+    prompt: 'Wheel loader pushing a large snow bank at an industrial yard at night, floodlights, deep Quebec winter' + SUFFIX },
+  { out: 'portfolio/real-location.jpg',
+    prompt: 'Telescopic boom lift raised beside a building under renovation, worker platform elevated, Quebec' + SUFFIX },
+  { out: 'portfolio/real-pieux.jpg',
+    prompt: 'Wooden deck framing resting on visible helical screw pile foundations in a backyard, joists and pile caps, summer' + SUFFIX },
+  { out: 'portfolio/real-commercial.jpg',
+    prompt: 'Commercial building under renovation with new facade panels partially installed, scaffolding along the wall, Quebec' + SUFFIX },
+  { out: 'portfolio/real-transport.jpg',
+    prompt: 'Dump truck unloading crushed gravel at a construction site, material cascading, dust rising, overcast Quebec sky' + SUFFIX },
+
+  // ── Division photos that were borrowing another division's image ─────────
+  { out: 'transport-sb.jpg',
+    prompt: 'Heavy haul semi truck with a lowboy trailer carrying a yellow excavator on a Quebec highway through boreal forest, wide cinematic shot, overcast' + SUFFIX },
+  { out: 'cafe-sb.jpg',
+    prompt: 'Commercial coffee service counter with an espresso machine and stacked cups beside a frozen slush drink machine, warm interior lighting' + SUFFIX },
 ];
 
 function callGemini(prompt) {
@@ -251,18 +285,23 @@ async function main() {
   let failed = 0;
 
   for (const img of images) {
-    const outPath = path.join(OUT_DIR, img.division, img.category, `${img.i}.jpg`);
+    // Category images live at services/<division>/<category>/<i>.jpg.
+    // Anything else (portfolio grids, division heroes) sets `out` explicitly.
+    const label = img.out || `${img.division}/${img.category}/${img.i}.jpg`;
+    const outPath = img.out
+      ? path.join(__dirname, '..', 'public', img.out)
+      : path.join(OUT_DIR, img.division, img.category, `${img.i}.jpg`);
     // writeFileSync does not create parent directories — this is why the
     // location/ and cafe/ folders never got generated.
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
 
     if (fs.existsSync(outPath)) {
-      console.log(`[SKIP] ${img.division}/${img.category}/${img.i}.jpg — already exists`);
+      console.log(`[SKIP] ${label} — already exists`);
       done++;
       continue;
     }
 
-    process.stdout.write(`[${done + 1}/${images.length}] ${img.division}/${img.category}/${img.i} ... `);
+    process.stdout.write(`[${done + 1}/${images.length}] ${label} ... `);
 
     try {
       const res = await callGemini(img.prompt);
