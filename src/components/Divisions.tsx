@@ -108,10 +108,10 @@ const accentMap: Record<string, { bar: string; bullet: string; numColor: string;
   cafe: { bar: "bg-cafe", bullet: "bg-cafe", numColor: "text-cafe/25", tagBorder: "border-cafe/50", linkHover: "group-hover:text-cafe", overlayHover: "group-hover:bg-black-1/92" },
 };
 
-// Extra vertical padding the card gains on hover (group-hover:pt-8/pb-8 vs p-6).
-const HOVER_PADDING_DELTA = 16;
-// Tailwind's max-h-40 ceiling on the services list = 10rem.
-const SERVICES_MAX_HEIGHT = 160;
+// Tailwind's max-h-40 ceiling on the services list, and the pt-8/pb-8 the card
+// gains on hover — applied temporarily to measure the real expanded height.
+const SERVICES_MAX_HEIGHT = "10rem";
+const HOVER_PADDING = "2rem";
 // Tailwind's `sm` breakpoint. Below it the services list is always visible,
 // so cards never expand and nothing needs reserving.
 const SM_BREAKPOINT = 640;
@@ -134,9 +134,39 @@ export function Divisions() {
       let tallest = 0;
       grid.querySelectorAll<HTMLElement>("[data-card]").forEach((card) => {
         const list = card.querySelector<HTMLElement>("[data-services]");
-        // scrollHeight reports the list's natural height even while collapsed.
-        const listHeight = list ? Math.min(list.scrollHeight, SERVICES_MAX_HEIGHT) : 0;
-        tallest = Math.max(tallest, card.offsetHeight + listHeight + HOVER_PADDING_DELTA);
+        const body = card.querySelector<HTMLElement>("[data-cardbody]");
+        if (!list || !body) return;
+
+        // Apply the hover state and read the real height. Estimating it instead
+        // (collapsed height + list height) over-reserves, because the collapsed
+        // card already has slack the list expands into — that was a 59px error
+        // per cell, which showed up as a too-large gap between rows.
+        const prev = {
+          max: list.style.maxHeight,
+          pt: body.style.paddingTop,
+          pb: body.style.paddingBottom,
+          listTransition: list.style.transition,
+          bodyTransition: body.style.transition,
+        };
+
+        // The transitions must be killed first. max-height is animated over
+        // 400ms, so setting it and reading offsetHeight straight away returns
+        // the still-collapsed value.
+        list.style.transition = "none";
+        body.style.transition = "none";
+        list.style.maxHeight = SERVICES_MAX_HEIGHT;
+        body.style.paddingTop = HOVER_PADDING;
+        body.style.paddingBottom = HOVER_PADDING;
+
+        tallest = Math.max(tallest, card.offsetHeight);
+
+        // Reverted in the same synchronous block, so this never paints.
+        list.style.maxHeight = prev.max;
+        body.style.paddingTop = prev.pt;
+        body.style.paddingBottom = prev.pb;
+        void card.offsetHeight; // flush before restoring transitions
+        list.style.transition = prev.listTransition;
+        body.style.transition = prev.bodyTransition;
       });
       if (tallest > 0) setCellHeight(tallest);
     };
@@ -166,7 +196,7 @@ export function Divisions() {
 
         <div
           ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-start gap-16 sm:gap-4 mt-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-start gap-16 sm:gap-x-4 sm:gap-y-3 mt-12"
         >
           {divisions.map((div, i) => {
             const accent = accentMap[div.accent];
@@ -195,7 +225,7 @@ export function Divisions() {
 
                 <span className={`absolute bottom-0 left-0 w-full sm:w-0 h-[3px] ${accent.bar} transition-all duration-400 sm:group-hover:w-full z-[3]`} />
 
-                <div className="relative z-[2] p-6 flex flex-col justify-center flex-1 transition-[padding] duration-300 group-hover:pt-8 group-hover:pb-8">
+                <div data-cardbody className="relative z-[2] p-6 flex flex-col justify-center flex-1 transition-[padding] duration-300 group-hover:pt-8 group-hover:pb-8">
                   <div className={`font-display text-4xl leading-none mb-3 transition-colors duration-400 ${accent.numColor}`}>
                     0{i + 1}
                   </div>
