@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import RevealOnScroll from "./RevealOnScroll";
@@ -108,18 +108,45 @@ const accentMap: Record<string, { bar: string; bullet: string; numColor: string;
   cafe: { bar: "bg-cafe", bullet: "bg-cafe", numColor: "text-cafe/25", tagBorder: "border-cafe/50", linkHover: "group-hover:text-cafe", overlayHover: "group-hover:bg-black-1/92" },
 };
 
+// Extra vertical padding the card gains on hover (group-hover:pt-8/pb-8 vs p-6).
+const HOVER_PADDING_DELTA = 16;
+// Tailwind's max-h-40 ceiling on the services list = 10rem.
+const SERVICES_MAX_HEIGHT = 160;
+// Tailwind's `sm` breakpoint. Below it the services list is always visible,
+// so cards never expand and nothing needs reserving.
+const SM_BREAKPOINT = 640;
+
 export function Divisions() {
   const gridRef = useRef<HTMLDivElement>(null);
-  const [gridMinHeight, setGridMinHeight] = useState<number | undefined>();
+  // Height each grid cell reserves so a card can expand on hover without
+  // growing its row — which is what used to shove every other card around.
+  const [cellHeight, setCellHeight] = useState<number | undefined>();
 
-  const lockGridHeight = useCallback(() => {
+  useEffect(() => {
     const grid = gridRef.current;
     if (!grid) return;
-    const current = grid.scrollHeight;
-    if (!gridMinHeight || current > gridMinHeight) {
-      setGridMinHeight(current);
-    }
-  }, [gridMinHeight]);
+
+    const measure = () => {
+      if (window.innerWidth < SM_BREAKPOINT) {
+        setCellHeight(undefined);
+        return;
+      }
+      let tallest = 0;
+      grid.querySelectorAll<HTMLElement>("[data-card]").forEach((card) => {
+        const list = card.querySelector<HTMLElement>("[data-services]");
+        // scrollHeight reports the list's natural height even while collapsed.
+        const listHeight = list ? Math.min(list.scrollHeight, SERVICES_MAX_HEIGHT) : 0;
+        tallest = Math.max(tallest, card.offsetHeight + listHeight + HOVER_PADDING_DELTA);
+      });
+      if (tallest > 0) setCellHeight(tallest);
+    };
+
+    measure();
+    // Web fonts land after first paint and change text height.
+    document.fonts?.ready.then(measure).catch(() => {});
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
 
   return (
     <section id="divisions" className="bg-black-1 pt-32 pb-44 px-[5%]">
@@ -140,15 +167,19 @@ export function Divisions() {
         <div
           ref={gridRef}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-start gap-16 sm:gap-4 mt-12"
-          style={gridMinHeight ? { minHeight: `${gridMinHeight}px` } : undefined}
         >
           {divisions.map((div, i) => {
             const accent = accentMap[div.accent];
             return (
-              <RevealOnScroll key={div.name} className="sm:col-span-1" delay={i * 100}>
+              <div
+                key={div.name}
+                className="sm:col-span-1"
+                style={cellHeight ? { minHeight: `${cellHeight}px` } : undefined}
+              >
+              <RevealOnScroll delay={i * 100}>
               <Link
                 href={div.href}
-                onMouseEnter={() => setTimeout(lockGridHeight, 450)}
+                data-card
                 className="group relative bg-charcoal rounded-sm overflow-hidden cursor-pointer transition-all duration-400 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.55)] sm:min-h-[320px] flex flex-col"
               >
                 <div className="absolute inset-0 z-0">
@@ -181,7 +212,7 @@ export function Divisions() {
                     {div.description}
                   </p>
 
-                  <div className="max-h-40 opacity-100 sm:max-h-0 sm:opacity-0 transition-all duration-400 sm:group-hover:max-h-40 sm:group-hover:opacity-100">
+                  <div data-services className="max-h-40 opacity-100 sm:max-h-0 sm:opacity-0 transition-all duration-400 sm:group-hover:max-h-40 sm:group-hover:opacity-100">
                     <ul className="space-y-1.5 mb-5">
                       {div.services.map((s) => (
                         <li key={s} className="text-xs text-silver/60 flex items-start gap-1.5">
@@ -199,6 +230,7 @@ export function Divisions() {
                 </div>
               </Link>
               </RevealOnScroll>
+              </div>
             );
           })}
         </div>

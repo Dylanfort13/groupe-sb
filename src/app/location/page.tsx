@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import RevealOnScroll from "@/components/RevealOnScroll";
 import basePath from "@/basePath";
 
@@ -41,6 +40,18 @@ const categories = [
     items: ["10x15", "20x20", "20x40", "40x80", "Service d'installation inclus"],
     icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><path d="M12 2v20" /></svg>,
   },
+];
+
+// Real equipment photos taken from the client's own inventory site,
+// location-expert.ca. Product shots on a white background, so these tiles are
+// deliberately light — they read as a catalogue rather than a project album.
+const equipment = [
+  { src: "/equipements/mini-excavatrice.jpg", alt: "Mini-excavatrice" },
+  { src: "/equipements/chargeuse-sur-roues.jpg", alt: "Chargeuse sur roues" },
+  { src: "/equipements/chargeuse-compacte.jpg", alt: "Chargeuse compacte sur chenilles" },
+  { src: "/equipements/chauffage-chantier.jpg", alt: "Chauffage de chantier" },
+  { src: "/equipements/ventilateur-industriel.jpg", alt: "Ventilateur industriel" },
+  { src: "/equipements/compresseur-air.jpg", alt: "Compresseur à air" },
 ];
 
 export default function LocationPage() {
@@ -114,21 +125,30 @@ export default function LocationPage() {
             <div className="flex justify-between items-end gap-8 flex-wrap mb-12">
               <div>
                 <div className="inline-flex items-center gap-2.5 text-location text-xs font-bold tracking-[0.22em] uppercase mb-4">
-                  Nos travaux
+                  Notre inventaire
                 </div>
-                <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient">RÉALISATIONS</h2>
+                <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient">NOS ÉQUIPEMENTS</h2>
               </div>
-              <Link href="/realisations" className="text-xs font-bold tracking-[0.1em] uppercase text-location hover:text-white transition-colors">
-                Voir tout →
-              </Link>
+              <a
+                href="https://www.location-expert.ca"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-bold tracking-[0.1em] uppercase text-location hover:text-white transition-colors"
+              >
+                Inventaire complet →
+              </a>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {[0, 1, 2, 3, 4, 5].map((i) => (
-                <div
-                  key={i}
-                  className="aspect-[4/3] rounded-sm"
-                  style={{ background: `linear-gradient(135deg, #4a8c3f${i % 2 === 0 ? "33" : "1a"}, #090909)` }}
-                />
+              {equipment.map((item) => (
+                <div key={item.src} className="group relative aspect-[4/3] rounded-sm overflow-hidden bg-white">
+                  <Image
+                    src={`${basePath}${item.src}`}
+                    alt={item.alt}
+                    fill
+                    sizes="(max-width: 640px) 50vw, 33vw"
+                    className="object-contain p-4 transition-transform duration-500 group-hover:scale-[1.05]"
+                  />
+                </div>
               ))}
             </div>
           </div>

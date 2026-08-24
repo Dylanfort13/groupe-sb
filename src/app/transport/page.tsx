@@ -31,6 +31,16 @@ const services = [
   },
 ];
 
+// Pulled from this division's own category sub-pages so the album isn't empty.
+const galleryImages = [
+  "/services/transport/camion-lourd/0.jpg",
+  "/services/transport/camion-lourd/1.jpg",
+  "/services/transport/deplacement-machinerie/0.jpg",
+  "/services/transport/deplacement-machinerie/1.jpg",
+  "/services/transport/transport-materiel/0.jpg",
+  "/services/transport/transport-materiel/2.jpg",
+];
+
 export default function TransportPage() {
   return (
     <>
@@ -120,12 +130,16 @@ export default function TransportPage() {
               </Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {[0, 1, 2, 3, 4, 5].map((i) => (
-                <div
-                  key={i}
-                  className="aspect-[4/3] rounded-sm"
-                  style={{ background: `linear-gradient(135deg, #b84040${i % 2 === 0 ? "33" : "1a"}, #090909)` }}
-                />
+              {galleryImages.map((src) => (
+                <div key={src} className="group relative aspect-[4/3] rounded-sm overflow-hidden bg-black-1">
+                  <Image
+                    src={`${basePath}${src}`}
+                    alt=""
+                    fill
+                    sizes="(max-width: 640px) 50vw, 33vw"
+                    className="object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-[1.04]"
+                  />
+                </div>
               ))}
             </div>
           </div>
