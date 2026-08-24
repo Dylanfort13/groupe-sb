@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { getSiteContent } from "@/lib/cms";
 
 const inter = Inter({
   variable: "--font-body",
@@ -15,17 +16,20 @@ export const metadata: Metadata = {
     "Groupe SB : À l'écoute des besoins de nos clients — service rapide et efficace. Construction, déneigement, location d'équipement et pieux vissés à Chibougamau.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // The header logo is a CMS field so the client can swap it themselves.
+  const content = await getSiteContent();
+
   return (
     <html lang="fr" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <Navbar />
+        <Navbar logo={content.brand.headerLogo} />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <Footer contacts={content.contacts.items} />
       </body>
     </html>
   );

@@ -3,13 +3,14 @@ import Image from "next/image";
 import { ContactForm } from "./ContactForm";
 import RevealOnScroll from "@/components/RevealOnScroll";
 import basePath from "@/basePath";
+import { getSiteContent } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Contact — Groupe SB",
   description: "Contactez Groupe SB : Construction SB, Déneigement SB, Location Expert et Pieux Vistech Chibougamau.",
 };
 
-const divisions = [
+const divisionStyles = [
   {
     name: "Construction SB",
     phone: "418-770-7506",
@@ -48,7 +49,21 @@ const divisions = [
   },
 ];
 
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ draft?: string }>;
+}) {
+  const cms = await getSiteContent((await searchParams)?.draft === "1");
+  // Styling stays in code; the client-editable name, phone and email come from
+  // the same CMS list the footer uses, so one edit updates both places.
+  const divisions = divisionStyles.map((style, i) => ({
+    ...style,
+    name: cms.contacts.items[i]?.name ?? style.name,
+    phone: cms.contacts.items[i]?.phone ?? style.phone,
+    email: cms.contacts.items[i]?.email ?? style.email,
+  }));
+
   return (
     <>
       <div className="relative py-32 px-[5%] overflow-hidden">
@@ -127,7 +142,7 @@ export default function ContactPage() {
                       <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`w-4 h-4 mt-0.5 flex-shrink-0 ${div.accentIcon}`} aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
                       <div>
                         <div className="text-[0.65rem] font-bold tracking-[0.1em] uppercase text-silver/50 mb-1">Courriel</div>
-                        <a href={`mailto:${div.email}`} className="text-sm font-semibold text-silver/90 hover:text-orange transition-colors">
+                        <a href={div.email ? `mailto:${div.email}` : undefined} className="text-sm font-semibold text-silver/90 hover:text-orange transition-colors">
                           {div.email}
                         </a>
                       </div>

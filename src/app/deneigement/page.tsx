@@ -71,8 +71,25 @@ export default async function DeneigementPage({
           <div className="inline-block text-[0.68rem] font-bold tracking-[0.2em] uppercase bg-black/30 border border-deneigement/40 text-deneigement px-2.5 py-1 rounded-sm mb-4">
             {page.hero.tag}
           </div>
-          <h1 className="font-display text-[clamp(3rem,7vw,7rem)] leading-[0.9] tracking-[0.02em] title-gradient mb-3 whitespace-pre-line">
-            {page.hero.title}
+          <h1
+            className={
+              page.hero.logo
+                ? "mb-3"
+                : "font-display text-[clamp(3rem,7vw,7rem)] leading-[0.9] tracking-[0.02em] title-gradient mb-3 whitespace-pre-line"
+            }
+          >
+            {page.hero.logo ? (
+              <Image
+                src={imgSrc(page.hero.logo, "/logo.png")}
+                alt={page.hero.title}
+                width={500}
+                height={200}
+                className="w-[clamp(280px,40vw,500px)] h-auto mx-auto"
+                priority
+              />
+            ) : (
+              page.hero.title
+            )}
           </h1>
           <p className="text-silver text-base leading-relaxed max-w-[520px] mx-auto">{page.hero.subtitle}</p>
         </div>

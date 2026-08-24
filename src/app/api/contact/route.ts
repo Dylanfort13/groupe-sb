@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { inboxFor } from "@/lib/inquiryRouting";
+import { inboxFrom } from "@/lib/inquiryRouting";
+import { getSiteContent } from "@/lib/cms";
 
 // The sender domain must be verified in Resend or the send is rejected.
 // fortx.site is verified; groupe-sb.ca is not owned yet. When the client's
@@ -10,7 +11,15 @@ export async function POST(req: Request) {
   const body = await req.json();
   const { firstName, lastName, email, phone, division, message } = body;
 
-  const toEmail = inboxFor(division);
+  // Prefer the address the client set in the CMS; fall back to the bundled map
+  // if the CMS is unreachable, so an inquiry is never dropped.
+  let contacts;
+  try {
+    contacts = (await getSiteContent()).contacts.items;
+  } catch {
+    contacts = undefined;
+  }
+  const toEmail = inboxFrom(division, contacts);
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {

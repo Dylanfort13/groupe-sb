@@ -32,6 +32,14 @@ export type Division = {
 
 export type PortfolioItem = { src: string; tag: string; name: string };
 export type Stat = { num: string; label: string };
+export type DivisionContact = {
+  name: string;
+  /** Accepts "418-770-4657 / 418-770-3726" — split on " / " when rendering. */
+  phone: string;
+  email: string;
+  /** Design token for the division's colour; not client-editable. */
+  accent: string;
+};
 
 export type SiteContent = {
   hero: {
@@ -63,6 +71,13 @@ export type SiteContent = {
     items: PortfolioItem[];
   };
   cta: { title: string; body: string; ctaText: string; zones: string[] };
+  /** Site-wide brand assets, shown on every page. */
+  brand: { headerLogo: string };
+  /**
+   * Per-division contact details. One list feeding both the footer and the
+   * contact page, so an edit in the CMS updates both at once.
+   */
+  contacts: { items: DivisionContact[] };
   /** One entry per division page, keyed by division slug. */
   divisionPages: Record<string, DivisionPageContent>;
   /** One entry per service sub-page, keyed "division/category". */
@@ -253,6 +268,17 @@ export const FALLBACK_CONTENT: SiteContent = {
     ctaText: "Soumission gratuite",
     zones: ["Chibougamau", "Chapais", "Mistissini", "Nord-du-Québec"],
   },
+  brand: { headerLogo: "/logo.png" },
+  contacts: {
+    items: [
+      { name: "Construction SB", phone: "418-770-7506", email: "constructions-sb@hotmail.com", accent: "construction" },
+      { name: "Déneigement SB", phone: "418-770-4657 / 418-770-3726", email: "deneigementsb@hotmail.com", accent: "deneigement" },
+      { name: "Location Expert", phone: "418-770-8243", email: "locationexpert@hotmail.com", accent: "location" },
+      { name: "Pieux Vistech", phone: "418-770-4657", email: "chibougamau@pieuxvistech.com", accent: "pieux" },
+      { name: "Transport SB", phone: "418-770-4657 / 418-770-3726", email: "transport_sb@hotmail.com", accent: "transport" },
+      { name: "Café Marc Robitaille", phone: "418-668-8022 / 1-800-463-9905", email: "", accent: "cafe" },
+    ],
+  },
   divisionPages: DIVISION_PAGES,
   categoryPages: buildCategoryFallback(),
 };
@@ -351,6 +377,21 @@ function merge(c: Record<string, any>): SiteContent {
       body: str(c.cta?.body, F.cta.body),
       ctaText: str(c.cta?.ctaText, F.cta.ctaText),
       zones: list<string>(c.cta?.zones, F.cta.zones),
+    },
+    brand: {
+      headerLogo: str(readImage(c.brand?.headerLogo), F.brand.headerLogo),
+    },
+    contacts: {
+      items: list<any>(c.contacts?.items, F.contacts.items).map((item, i) => {
+        const base = F.contacts.items[i] ?? F.contacts.items[0];
+        return {
+          name: str(item?.name, base.name),
+          phone: str(item?.phone, base.phone),
+          // An email may legitimately be blank (Café has none), so "" is kept.
+          email: typeof item?.email === "string" ? item.email.trim() : base.email,
+          accent: base.accent,
+        };
+      }),
     },
     divisionPages: mergeDivisionPages(c.divisionPages),
     categoryPages: mergeCategoryPages(c.categoryPages),

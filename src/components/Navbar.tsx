@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import basePath from "@/basePath";
+import { imgSrc } from "@/lib/cms";
 
 const subLinks = [
   { href: "/construction", label: "Construction SB", accent: "text-construction" },
@@ -14,7 +14,7 @@ const subLinks = [
   { href: "/cafe", label: "Café Marc Robitaille", accent: "text-cafe" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ logo }: { logo?: string }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [subOpen, setSubOpen] = useState(false);
@@ -35,7 +35,7 @@ export default function Navbar() {
     >
       <Link href="/" className="flex items-center">
         <Image
-          src={`${basePath}/logo.png`}
+          src={imgSrc(logo, "/logo.png")}
           alt="Groupe SB"
           width={58}
           height={44}
