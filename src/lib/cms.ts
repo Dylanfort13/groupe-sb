@@ -320,7 +320,12 @@ export async function getSiteContent(draft = false): Promise<SiteContent> {
   if (!CENTRAL_URL || !TENANT_ID) return FALLBACK_CONTENT;
 
   try {
-    const url = `${CENTRAL_URL}/api/public/site?tenant=${TENANT_ID}${draft ? "&draft=true" : ""}`;
+    // strict=1 keeps unpublished drafts off the live site — without it the
+    // platform merges draftContent over publishedContent, so every autosave
+    // would go live and "Publier" would mean nothing.
+    const url = `${CENTRAL_URL}/api/public/site?tenant=${TENANT_ID}${
+      draft ? "&draft=true" : "&strict=1"
+    }`;
     const res = await fetch(url, { next: { revalidate: draft ? 0 : 60 } });
     if (!res.ok) throw new Error(`CMS responded ${res.status}`);
     const data = await res.json();
