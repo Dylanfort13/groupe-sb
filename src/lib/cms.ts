@@ -8,6 +8,12 @@
  * individually — a missing or empty CMS field never blanks a section.
  */
 import basePath from "@/basePath";
+import {
+  DIVISION_PAGES,
+  DIVISION_SLUGS,
+  type DivisionPageContent,
+} from "@/data/divisionPages";
+import { getAllSlugs, getCategoryData } from "@/data/serviceDetails";
 
 const CENTRAL_URL =
   process.env.CENTRAL_URL || process.env.NEXT_PUBLIC_CENTRAL_URL || "";
@@ -57,7 +63,38 @@ export type SiteContent = {
     items: PortfolioItem[];
   };
   cta: { title: string; body: string; ctaText: string; zones: string[] };
+  /** One entry per division page, keyed by division slug. */
+  divisionPages: Record<string, DivisionPageContent>;
+  /** One entry per service sub-page, keyed "division/category". */
+  categoryPages: Record<string, CategoryPageContent>;
 };
+
+export type CategoryItem = { name: string; description: string; image: string };
+export type CategoryPageContent = { categoryTitle: string; items: CategoryItem[] };
+
+/**
+ * Category page defaults come straight from serviceDetails.ts, with the image
+ * path each item already renders by convention. Deriving them means the 20
+ * sub-pages can never drift out of sync with the data that defines them.
+ */
+function buildCategoryFallback(): Record<string, CategoryPageContent> {
+  const out: Record<string, CategoryPageContent> = {};
+  for (const division of DIVISION_SLUGS) {
+    for (const category of getAllSlugs(division)) {
+      const data = getCategoryData(division, category);
+      if (!data) continue;
+      out[`${division}/${category}`] = {
+        categoryTitle: data.categoryTitle,
+        items: data.items.map((item, i) => ({
+          name: item.name,
+          description: item.description,
+          image: `/services/${division}/${category}/${i}.jpg`,
+        })),
+      };
+    }
+  }
+  return out;
+}
 
 export const FALLBACK_CONTENT: SiteContent = {
   hero: {
@@ -216,6 +253,8 @@ export const FALLBACK_CONTENT: SiteContent = {
     ctaText: "Soumission gratuite",
     zones: ["Chibougamau", "Chapais", "Mistissini", "Nord-du-Québec"],
   },
+  divisionPages: DIVISION_PAGES,
+  categoryPages: buildCategoryFallback(),
 };
 
 /**
@@ -313,7 +352,74 @@ function merge(c: Record<string, any>): SiteContent {
       ctaText: str(c.cta?.ctaText, F.cta.ctaText),
       zones: list<string>(c.cta?.zones, F.cta.zones),
     },
+    divisionPages: mergeDivisionPages(c.divisionPages),
+    categoryPages: mergeCategoryPages(c.categoryPages),
   };
+}
+
+function mergeDivisionPages(raw: unknown): Record<string, DivisionPageContent> {
+  const incoming = (raw && typeof raw === "object" ? raw : {}) as Record<string, any>;
+  const out: Record<string, DivisionPageContent> = {};
+  for (const slug of Object.keys(FALLBACK_CONTENT.divisionPages)) {
+    const base = FALLBACK_CONTENT.divisionPages[slug];
+    const cms = incoming[slug] || {};
+    out[slug] = {
+      hero: {
+        tag: str(cms.hero?.tag, base.hero.tag),
+        title: str(cms.hero?.title, base.hero.title),
+        subtitle: str(cms.hero?.subtitle, base.hero.subtitle),
+        backgroundImage: str(readImage(cms.hero?.backgroundImage), base.hero.backgroundImage),
+        // A logo may legitimately be cleared, so an empty string is respected.
+        logo:
+          typeof cms.hero?.logo === "string" || cms.hero?.logo
+            ? readImage(cms.hero.logo)
+            : base.hero.logo,
+      },
+      services: {
+        eyebrow: str(cms.services?.eyebrow, base.services.eyebrow),
+        title: str(cms.services?.title, base.services.title),
+        intro: str(cms.services?.intro, base.services.intro),
+        cards: list<any>(cms.services?.cards, base.services.cards).map((card, i) => {
+          const cardBase = base.services.cards[i] ?? base.services.cards[0];
+          return {
+            title: str(card?.title, cardBase.title),
+            // The slug is the sub-page route — never client-editable.
+            slug: cardBase.slug,
+            items: list<string>(card?.items, cardBase.items),
+          };
+        }),
+      },
+      gallery: {
+        eyebrow: str(cms.gallery?.eyebrow, base.gallery.eyebrow),
+        title: str(cms.gallery?.title, base.gallery.title),
+        images: list<any>(cms.gallery?.images, base.gallery.images).map((img, i) =>
+          str(readImage(img), base.gallery.images[i] ?? base.gallery.images[0])
+        ),
+      },
+    };
+  }
+  return out;
+}
+
+function mergeCategoryPages(raw: unknown): Record<string, CategoryPageContent> {
+  const incoming = (raw && typeof raw === "object" ? raw : {}) as Record<string, any>;
+  const out: Record<string, CategoryPageContent> = {};
+  for (const key of Object.keys(FALLBACK_CONTENT.categoryPages)) {
+    const base = FALLBACK_CONTENT.categoryPages[key];
+    const cms = incoming[key] || {};
+    out[key] = {
+      categoryTitle: str(cms.categoryTitle, base.categoryTitle),
+      items: list<any>(cms.items, base.items).map((item, i) => {
+        const itemBase = base.items[i] ?? base.items[0];
+        return {
+          name: str(item?.name, itemBase.name),
+          description: str(item?.description, itemBase.description),
+          image: str(readImage(item?.image), itemBase.image),
+        };
+      }),
+    };
+  }
+  return out;
 }
 
 export async function getSiteContent(draft = false): Promise<SiteContent> {

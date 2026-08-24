@@ -1,8 +1,12 @@
 import { notFound } from "next/navigation";
 import { getCategoryData, getAllSlugs } from "@/data/serviceDetails";
 import ServiceCategoryPage from "@/components/ServiceCategoryPage";
+import { getSiteContent } from "@/lib/cms";
 
-type Props = { params: Promise<{ category: string }> };
+type Props = {
+  params: Promise<{ category: string }>;
+  searchParams?: Promise<{ draft?: string }>;
+};
 
 export async function generateStaticParams() {
   return getAllSlugs("pieux-vistech").map((category) => ({ category }));
@@ -15,9 +19,11 @@ export async function generateMetadata({ params }: Props) {
   return { title: `${data.categoryTitle} — Pieux Vistech` };
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page({ params, searchParams }: Props) {
   const { category } = await params;
   const data = getCategoryData("pieux-vistech", category);
   if (!data) notFound();
-  return <ServiceCategoryPage data={data} />;
+  // ?draft=1 renders unpublished content for the portal's preview pane.
+  const cms = await getSiteContent((await searchParams)?.draft === "1");
+  return <ServiceCategoryPage data={data} content={cms.categoryPages[`pieux-vistech/${category}`]} />;
 }

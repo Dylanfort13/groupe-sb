@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import RevealOnScroll from "@/components/RevealOnScroll";
 import basePath from "@/basePath";
+import { getSiteContent, imgSrc } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Construction SB — Groupe SB",
@@ -41,26 +42,33 @@ const galleryImages = [
   "/services/construction/isolation/0.jpg",
 ];
 
-export default function ConstructionPage() {
+export default async function ConstructionPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ draft?: string }>;
+}) {
+  // ?draft=1 renders unpublished content for the portal's preview pane.
+  const draft = (await searchParams)?.draft === "1";
+  const cms = await getSiteContent(draft);
+  const page = cms.divisionPages["construction"];
+
   return (
     <>
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <Image src={`${basePath}/construction-sb.jpg`} alt="" fill sizes="100vw" className="object-cover grayscale" priority />
+          <Image src={imgSrc(page.hero.backgroundImage, "/construction-sb.jpg")} alt="" fill sizes="100vw" className="object-cover grayscale" priority />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black-1/96 via-black-1/50 to-black-1/25" />
         <div className="absolute inset-0 bg-construction/12" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#090909_100%)]" />
         <div className="relative z-10 px-[5%] pt-32 pb-20 text-center">
           <div className="inline-block text-[0.68rem] font-bold tracking-[0.2em] uppercase bg-black/30 border border-construction/40 text-construction px-2.5 py-1 rounded-sm mb-4">
-            Division 01
+            {page.hero.tag}
           </div>
-          <h1 className="font-display text-[clamp(3rem,7vw,7rem)] leading-[0.9] tracking-[0.02em] title-gradient mb-3">
-            CONSTRUCTION SB
+          <h1 className="font-display text-[clamp(3rem,7vw,7rem)] leading-[0.9] tracking-[0.02em] title-gradient mb-3 whitespace-pre-line">
+            {page.hero.title}
           </h1>
-          <p className="text-silver text-base leading-relaxed max-w-[520px] mx-auto">
-            Construction résidentielle et commerciale de tous types, spécialité béton. Votre projet, notre expertise.
-          </p>
+          <p className="text-silver text-base leading-relaxed max-w-[520px] mx-auto">{page.hero.subtitle}</p>
         </div>
       </section>
 
@@ -70,15 +78,15 @@ export default function ConstructionPage() {
             <div className="flex justify-between items-end gap-8 flex-wrap mb-12">
               <div>
                 <div className="inline-flex items-center gap-2.5 text-construction text-xs font-bold tracking-[0.22em] uppercase mb-4">
-                  Ce que nous faisons
+                  {page.services.eyebrow}
                 </div>
-                <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient">NOS SERVICES</h2>
+                <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient">{page.services.title}</h2>
               </div>
-              <p className="text-silver text-base leading-relaxed max-w-[420px]">Résidentiel, commercial et spécialité béton, de l&apos;excavation à la finition.</p>
+              <p className="text-silver text-base leading-relaxed max-w-[420px]">{page.services.intro}</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {services.map((svc, i) => (
+              {page.services.cards.map((svc, i) => (
                 <RevealOnScroll key={svc.title} delay={i * 100} className="h-full">
                   <div className="group relative bg-charcoal rounded-sm overflow-hidden transition-all duration-700 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.55)] flex flex-col h-full">
                     <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url('${basePath}/texture-metal.jpg')` }} />
@@ -86,7 +94,7 @@ export default function ConstructionPage() {
                     <span className="absolute bottom-0 left-0 w-full sm:w-0 h-[3px] bg-construction transition-all duration-700 sm:group-hover:w-full z-[3]" />
                     <div className="relative z-[2] p-8 flex flex-col h-full">
                       <div className="font-display text-xl tracking-[0.04em] text-white mb-4 pb-3 border-b border-construction/25 flex items-center gap-2.5">
-                        <span className="text-construction">{svc.icon}</span>
+                        <span className="text-construction">{services[i]?.icon}</span>
                         {svc.title}
                       </div>
                       <ul className="space-y-2 flex-1">
@@ -121,19 +129,19 @@ export default function ConstructionPage() {
             <div className="flex justify-between items-end gap-8 flex-wrap mb-12">
               <div>
                 <div className="inline-flex items-center gap-2.5 text-construction text-xs font-bold tracking-[0.22em] uppercase mb-4">
-                  Nos travaux
+                  {page.gallery.eyebrow}
                 </div>
-                <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient">RÉALISATIONS</h2>
+                <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient">{page.gallery.title}</h2>
               </div>
               <Link href="/realisations" className="text-xs font-bold tracking-[0.1em] uppercase text-construction hover:text-white transition-colors">
                 Voir tout →
               </Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {galleryImages.map((src) => (
-                <div key={src} className="group relative aspect-[4/3] rounded-sm overflow-hidden bg-black-1">
+              {page.gallery.images.map((src, gi) => (
+                <div key={`${src}-${gi}`} className="group relative aspect-[4/3] rounded-sm overflow-hidden bg-black-1">
                   <Image
-                    src={`${basePath}${src}`}
+                    src={imgSrc(src, "/construction-sb.jpg")}
                     alt=""
                     fill
                     sizes="(max-width: 640px) 50vw, 33vw"

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import RevealOnScroll from "@/components/RevealOnScroll";
 import basePath from "@/basePath";
+import { getSiteContent, imgSrc } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Location Expert — Groupe SB",
@@ -54,26 +55,33 @@ const equipment = [
   { src: "/equipements/compresseur-air.jpg", alt: "Compresseur à air" },
 ];
 
-export default function LocationPage() {
+export default async function LocationPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ draft?: string }>;
+}) {
+  // ?draft=1 renders unpublished content for the portal's preview pane.
+  const draft = (await searchParams)?.draft === "1";
+  const cms = await getSiteContent(draft);
+  const page = cms.divisionPages["location"];
+
   return (
     <>
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <Image src={`${basePath}/location-expert-hero.jpg`} alt="" fill sizes="100vw" className="object-cover grayscale" priority />
+          <Image src={imgSrc(page.hero.backgroundImage, "/location-expert-hero.jpg")} alt="" fill sizes="100vw" className="object-cover grayscale" priority />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black-1/96 via-black-1/50 to-black-1/25" />
         <div className="absolute inset-0 bg-location/12" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#090909_100%)]" />
         <div className="relative z-10 px-[5%] pt-32 pb-20 text-center">
           <div className="inline-block text-[0.68rem] font-bold tracking-[0.2em] uppercase bg-black/30 border border-location/40 text-location px-2.5 py-1 rounded-sm mb-4">
-            Division 03
+            {page.hero.tag}
           </div>
           <h1 className="mb-3">
             <Image src={`${basePath}/logo-location-expert.png`} alt="Location Expert" width={500} height={200} className="w-[clamp(280px,40vw,500px)] h-auto mx-auto" priority />
           </h1>
-          <p className="text-silver text-base leading-relaxed max-w-[520px] mx-auto">
-            Location d&apos;outils et de machinerie diverse : l&apos;équipement qu&apos;il vous faut, quand vous en avez besoin.
-          </p>
+          <p className="text-silver text-base leading-relaxed max-w-[520px] mx-auto">{page.hero.subtitle}</p>
         </div>
       </section>
 
@@ -83,15 +91,15 @@ export default function LocationPage() {
             <div className="flex justify-between items-end gap-8 flex-wrap mb-12">
               <div>
                 <div className="inline-flex items-center gap-2.5 text-location text-xs font-bold tracking-[0.22em] uppercase mb-4">
-                  Notre inventaire
+                  {page.services.eyebrow}
                 </div>
-                <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient">CATALOGUE D&apos;ÉQUIPEMENTS</h2>
+                <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient">{page.services.title}</h2>
               </div>
-              <p className="text-silver text-base leading-relaxed max-w-[420px]">Outils de chantier, machinerie lourde, chapiteaux et équipement spécialisé disponibles à la location.</p>
+              <p className="text-silver text-base leading-relaxed max-w-[420px]">{page.services.intro}</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {categories.map((cat, i) => (
+              {page.services.cards.map((cat, i) => (
                 <RevealOnScroll key={cat.title} delay={i * 100} className="h-full">
                   <div className="group relative bg-charcoal rounded-sm overflow-hidden transition-all duration-700 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.55)] flex flex-col h-full">
                     <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url('${basePath}/texture-metal.jpg')` }} />
@@ -99,7 +107,7 @@ export default function LocationPage() {
                     <span className="absolute bottom-0 left-0 w-full sm:w-0 h-[3px] bg-location transition-all duration-700 sm:group-hover:w-full z-[3]" />
                     <div className="relative z-[2] p-8 flex flex-col h-full">
                       <div className="font-display text-xl tracking-[0.04em] text-white mb-4 pb-3 border-b border-location/25 flex items-center gap-2.5">
-                        <span className="text-location">{cat.icon}</span>
+                        <span className="text-location">{categories[i]?.icon}</span>
                         {cat.title}
                       </div>
                       <ul className="space-y-2 flex-1">
@@ -127,7 +135,7 @@ export default function LocationPage() {
                 <div className="inline-flex items-center gap-2.5 text-location text-xs font-bold tracking-[0.22em] uppercase mb-4">
                   Notre inventaire
                 </div>
-                <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient">NOS ÉQUIPEMENTS</h2>
+                <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient">{page.gallery.title}</h2>
               </div>
               <a
                 href="https://www.location-expert.ca"
@@ -139,11 +147,11 @@ export default function LocationPage() {
               </a>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {equipment.map((item) => (
-                <div key={item.src} className="group relative aspect-[4/3] rounded-sm overflow-hidden bg-white">
+              {page.gallery.images.map((item, gi) => (
+                <div key={`${item}-${gi}`} className="group relative aspect-[4/3] rounded-sm overflow-hidden bg-white">
                   <Image
-                    src={`${basePath}${item.src}`}
-                    alt={item.alt}
+                    src={imgSrc(item, "/equipements/mini-excavatrice.jpg")}
+                    alt=""
                     fill
                     sizes="(max-width: 640px) 50vw, 33vw"
                     className="object-contain p-4 transition-transform duration-500 group-hover:scale-[1.05]"

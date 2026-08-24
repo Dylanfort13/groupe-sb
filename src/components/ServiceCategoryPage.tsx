@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import RevealOnScroll from "./RevealOnScroll";
 import type { CategoryData } from "@/data/serviceDetails";
+import { imgSrc, type CategoryPageContent } from "@/lib/cms";
 
 const accentHex: Record<string, string> = {
   construction: "#c46520",
@@ -12,9 +13,24 @@ const accentHex: Record<string, string> = {
   cafe: "#7a5230",
 };
 
-export default function ServiceCategoryPage({ data }: { data: CategoryData }) {
+export default function ServiceCategoryPage({
+  data,
+  content,
+}: {
+  data: CategoryData;
+  /** CMS override for this sub-page. Falls back to the bundled data. */
+  content?: CategoryPageContent;
+}) {
   const hex = accentHex[data.accentVar] ?? "#ef6006";
-  const total = data.items.length;
+  // Layout (order, accent, links) comes from data; copy and images from the CMS.
+  const items = data.items.map((item, i) => ({
+    name: content?.items?.[i]?.name || item.name,
+    description: content?.items?.[i]?.description || item.description,
+    image: content?.items?.[i]?.image || `/services/${data.divisionSlug}/${data.categorySlug}/${i}.jpg`,
+    imagePosition: item.imagePosition,
+  }));
+  const categoryTitle = content?.categoryTitle || data.categoryTitle;
+  const total = items.length;
 
   return (
     <>
@@ -40,7 +56,7 @@ export default function ServiceCategoryPage({ data }: { data: CategoryData }) {
             </div>
           </div>
           <h1 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] tracking-[0.02em] title-gradient">
-            {data.categoryTitle.toUpperCase()}
+            {categoryTitle.toUpperCase()}
           </h1>
         </div>
       </section>
@@ -48,17 +64,17 @@ export default function ServiceCategoryPage({ data }: { data: CategoryData }) {
       {/* B3 — 50/50 alternating sections */}
       <section className="bg-black-1">
         <div className="flex flex-col">
-          {data.items.map((item, i) => {
+          {items.map((item, i) => {
             const flip = i % 2 === 1;
             return (
-              <RevealOnScroll key={item.name} delay={i * 60}>
+              <RevealOnScroll key={`${item.name}-${i}`} delay={i * 60}>
                 <div
                   className={`group flex flex-col lg:flex-row ${flip ? "lg:flex-row-reverse" : ""} border-b border-charcoal/35 last:border-b-0`}
                 >
                   {/* image panel 50% */}
                   <div className="w-full lg:w-1/2 aspect-[4/3] lg:aspect-auto min-h-[380px] relative flex-shrink-0 overflow-hidden bg-black-2">
                     <Image
-                      src={`/services/${data.divisionSlug}/${data.categorySlug}/${i}.jpg`}
+                      src={imgSrc(item.image, `/services/${data.divisionSlug}/${data.categorySlug}/${i}.jpg`)}
                       alt=""
                       fill
                       sizes="(max-width: 1024px) 100vw, 50vw"
