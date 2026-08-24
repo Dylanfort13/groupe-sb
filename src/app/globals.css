@@ -58,48 +58,59 @@ body::after {
   color: white;
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-}
+/*
+ * Scroll reveals are opt-in on JavaScript being available.
+ *
+ * These start at opacity 0 and are revealed by RevealOnScroll's
+ * IntersectionObserver. If scripts cannot run — the portal dashboard renders
+ * the preview in an iframe sandboxed without allow-scripts — the page would
+ * otherwise be entirely blank. Under `scripting: none` the hidden state is
+ * never applied, so everything renders immediately, just without animation.
+ */
+@media (scripting: enabled) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
 
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
-.reveal-left {
-  opacity: 0;
-  transform: translateX(-30px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-}
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
 
-.reveal-left.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
 
-.reveal-right {
-  opacity: 0;
-  transform: translateX(30px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-}
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
 
-.reveal-right.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
+  .reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
 
-.reveal-scale {
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-}
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
 
-.reveal-scale.visible {
-  opacity: 1;
-  transform: scale(1);
+  .reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .title-gradient {
