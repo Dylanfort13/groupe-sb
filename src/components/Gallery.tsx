@@ -1,44 +1,44 @@
 import RevealOnScroll from "./RevealOnScroll";
 import Link from "next/link";
 import Image from "next/image";
-import basePath from "@/basePath";
+import { imgSrc, type SiteContent } from "@/lib/cms";
 
-// Stand-in imagery until the client uploads real project photos. The section
-// heading deliberately does not claim these are completed Groupe SB projects.
-export const PORTFOLIO_SLOTS = [
-  { src: "/portfolio/home-residentiel.jpg", tag: "Construction", name: "Résidentiel", grid: "lg:col-start-1 lg:col-end-6 lg:row-start-1" },
-  { src: "/portfolio/home-deneigement.jpg", tag: "Déneigement", name: "Déneigement commercial", grid: "lg:col-start-6 lg:col-end-9 lg:row-start-1" },
-  { src: "/portfolio/home-transport.jpg", tag: "Transport", name: "Transport de machinerie", grid: "lg:col-start-9 lg:col-end-13 lg:row-start-1" },
-  { src: "/portfolio/home-location.jpg", tag: "Location", name: "Équipements", grid: "lg:col-start-1 lg:col-end-5 lg:row-start-2" },
-  { src: "/portfolio/home-pieux.jpg", tag: "Pieux Vistech", name: "Fondations", grid: "lg:col-start-5 lg:col-end-9 lg:row-start-2" },
-  { src: "/portfolio/home-commercial.jpg", tag: "Construction", name: "Commercial", grid: "lg:col-start-9 lg:col-end-13 lg:row-start-2" },
+// Layout only — which grid cell each tile occupies. Not client-editable.
+const GRID_AREAS = [
+  "lg:col-start-1 lg:col-end-6 lg:row-start-1",
+  "lg:col-start-6 lg:col-end-9 lg:row-start-1",
+  "lg:col-start-9 lg:col-end-13 lg:row-start-1",
+  "lg:col-start-1 lg:col-end-5 lg:row-start-2",
+  "lg:col-start-5 lg:col-end-9 lg:row-start-2",
+  "lg:col-start-9 lg:col-end-13 lg:row-start-2",
 ];
 
-export function Gallery() {
+export function Gallery({ content }: { content: SiteContent["portfolio"] }) {
   return (
-    <section className="bg-light-bg py-32 px-[5%]">
+    <section id="portfolio" className="bg-light-bg py-32 px-[5%]">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-end gap-8 flex-wrap mb-12">
           <div>
             <div className="inline-flex items-center gap-2.5 text-orange text-xs font-bold tracking-[0.22em] uppercase mb-4">
-              Portfolio
+              {content.eyebrow}
             </div>
             <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient-light">
-              NOTRE<br />SAVOIR-FAIRE
+              {content.titleLine1}
+              <br />
+              {content.titleLine2}
             </h2>
           </div>
           <p className="text-light-muted text-base leading-relaxed max-w-[420px]">
-            Un aperçu de nos champs d&apos;expertise en construction, déneigement,
-            location, transport et fondations.
+            {content.description}
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3">
-          {PORTFOLIO_SLOTS.map((p) => (
-            <RevealOnScroll key={p.name} className={p.grid}>
+          {content.items.map((p, i) => (
+            <RevealOnScroll key={`${p.name}-${i}`} className={GRID_AREAS[i % GRID_AREAS.length]}>
               <div className="group relative overflow-hidden rounded-sm cursor-pointer h-[220px] sm:h-[240px] lg:h-[280px]">
                 <Image
-                  src={`${basePath}${p.src}`}
+                  src={imgSrc(p.src, "/portfolio/home-residentiel.jpg")}
                   alt={p.name}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -62,7 +62,7 @@ export function Gallery() {
             href="/realisations"
             className="inline-flex items-center gap-2 bg-orange text-white text-sm font-bold tracking-[0.12em] uppercase px-10 py-4 rounded-sm border-2 border-orange hover:bg-orange-dark hover:border-orange-dark transition-all duration-200 touch-manipulation"
           >
-            Voir plus de photos
+            {content.ctaText}
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
           </Link>
         </div>

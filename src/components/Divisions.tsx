@@ -4,100 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import RevealOnScroll from "./RevealOnScroll";
-import basePath from "@/basePath";
+import { imgSrc, type SiteContent } from "@/lib/cms";
 
-const divisions = [
-  {
-    name: "Construction SB",
-    href: "/construction",
-    tag: "Division 01",
-    description: "Construction résidentielle et commerciale, spécialité béton, excavation et fondations.",
-    services: [
-      "Construction résidentielle & commerciale",
-      "Excavation et drain de fondation",
-      "Isolation uréthane et laine soufflée",
-      "Paysagement et installation clôture",
-    ],
-    phone: "418-770-7506",
-    image: "/construction-sb.jpg",
-    accent: "construction",
-  },
-  {
-    name: "Déneigement SB",
-    href: "/deneigement",
-    tag: "Division 02",
-    description: "Déneigement résidentiel, commercial et industriel, transport et matériel granulaire.",
-    services: [
-      "Déneigement sur appel et à la main",
-      "Transport de neige et vrac",
-      "Vente de matériel granulaire",
-      "Contrats saisonniers",
-    ],
-    phone: "418-770-4657",
-    image: "/deneigement-sb.jpg",
-    accent: "deneigement",
-  },
-  {
-    name: "Location Expert",
-    href: "/location",
-    tag: "Division 03",
-    description: "Location d'outils de chantier, machinerie lourde et équipement spécialisé.",
-    services: [
-      "Outils de chantier et construction",
-      "Machinerie lourde et compaction",
-      "Génératrices et éclairage",
-      "Location de chapiteaux",
-    ],
-    phone: "418-770-8243",
-    image: "/location-expert.jpg",
-    accent: "location",
-  },
-  {
-    name: "Pieux Vistech Chibougamau",
-    href: "/pieux-vistech",
-    tag: "Division 04",
-    description: "Installation de pieux vissés certifiés pour tous types de fondations.",
-    services: [
-      "Fondations résidentielles",
-      "Structures commerciales",
-      "Terrasses, clôtures, solarium",
-      "Agrandissements",
-    ],
-    phone: "418-770-4657",
-    image: "/pieux-vistech.jpg",
-    accent: "pieux",
-  },
-  {
-    name: "Transport SB",
-    href: "/transport",
-    tag: "Division 05",
-    description: "Transport de machinerie lourde, déplacement d'équipements et livraison de matériaux.",
-    services: [
-      "Camions lourds (10 et 12 roues)",
-      "Déplacement de machinerie",
-      "Transport de nacelle et équipements",
-      "Livraison d'agrégats et matériaux",
-    ],
-    phone: "418-770-4657",
-    image: "/transport-sb.jpg",
-    accent: "transport",
-  },
-  {
-    name: "Café Marc Robitaille",
-    href: "/cafe",
-    tag: "Division 06",
-    description: "Distributeur de café et slush — machines commerciales, entretien et fournitures.",
-    services: [
-      "Café premium (diverses torréfactions)",
-      "Produits Slush Puppie",
-      "Machines commerciales à café et slush",
-      "Entretien et réparation d'équipements",
-    ],
-    phone: "418-668-8022",
-    image: "/cafe-sb.jpg",
-    accent: "cafe",
-  },
-];
 
 const accentMap: Record<string, { bar: string; bullet: string; numColor: string; tagBorder: string; linkHover: string; overlayHover: string }> = {
   construction: { bar: "bg-construction", bullet: "bg-construction", numColor: "text-construction/25", tagBorder: "border-construction/50", linkHover: "group-hover:text-construction", overlayHover: "group-hover:bg-black-1/92" },
@@ -116,7 +24,8 @@ const HOVER_PADDING = "2rem";
 // so cards never expand and nothing needs reserving.
 const SM_BREAKPOINT = 640;
 
-export function Divisions() {
+export function Divisions({ content }: { content: SiteContent["divisions"] }) {
+  const divisions = content.items;
   const gridRef = useRef<HTMLDivElement>(null);
   // Height each grid cell reserves so a card can expand on hover without
   // growing its row — which is what used to shove every other card around.
@@ -184,13 +93,13 @@ export function Divisions() {
         <div className="mb-16">
           <div className="inline-flex items-center gap-2.5 text-orange text-xs font-bold tracking-[0.22em] uppercase mb-4">
             <span className="block w-7 h-0.5 bg-orange" />
-            Groupe SB
+            {content.eyebrow}
           </div>
-          <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient">
-            NOS<br />DIVISIONS
+          <h2 className="font-display text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.93] tracking-[0.02em] title-gradient whitespace-pre-line">
+            {content.title}
           </h2>
           <p className="text-silver text-base leading-relaxed max-w-[520px] mt-4">
-            Six divisions complémentaires pour répondre à tous vos besoins en construction, déneigement, location, transport, pieux vissés et café.
+            {content.intro}
           </p>
         </div>
 
@@ -214,7 +123,7 @@ export function Divisions() {
               >
                 <div className="absolute inset-0 z-0">
                   <Image
-                    src={`${basePath}${div.image}`}
+                    src={imgSrc(div.image, "/construction-sb.jpg")}
                     alt=""
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
